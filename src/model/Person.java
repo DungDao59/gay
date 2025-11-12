@@ -36,6 +36,10 @@ public class Person{
     }
 
     // SETTER
+    public void setId(int newId){
+        id = newId;
+    }
+
     public void setFullName(String newFullName){
         this.fullName = newFullName;
     }

@@ -11,8 +11,9 @@ public class Presenter extends Person {
     private PresenterRole role;
     private List<Session> sessions;
 
-    public Presenter(String fullName, LocalDateTime dateOfBirth, String contactInformation){
+    public Presenter(String fullName, LocalDateTime dateOfBirth, String contactInformation, PresenterRole role){
         super(fullName, dateOfBirth, contactInformation);
+        this.role = role;
     }
 
     // GETTER
@@ -22,6 +23,11 @@ public class Presenter extends Person {
 
     public List<Session> getSessions(){
         return sessions;
+    }
+
+    // SETTER 
+    public void setPresenterRole(PresenterRole newRole){
+        role = newRole;
     }
 
 }
