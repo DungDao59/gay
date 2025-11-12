@@ -2,6 +2,7 @@ package model;
 
 /*
  * @author Dao Tien Dung - s4088577
+ * Ticket class for ticket
  */
 
 public class Ticket {

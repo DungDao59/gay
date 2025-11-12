@@ -3,6 +3,7 @@ import java.util.*;
 
 /*
  * @author Dao Tien Dung - s4088577
+ * Schedule class for schedule
  */
 
 

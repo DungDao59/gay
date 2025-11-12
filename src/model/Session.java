@@ -3,9 +3,10 @@ import java.util.*;
 import java.time.*;
 /*
  * @author Dao Tien Dung - s4088577
+ * Session class for session
  */
 
- public class Session {
+public class Session {
     private int sessionId;
     private String title;
     private String description;

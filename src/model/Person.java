@@ -3,6 +3,7 @@ import java.time.LocalDateTime;
 
 /*
  * @author Dao Tien Dung - s4088577
+ * Person based class
  */
 
 public class Person{

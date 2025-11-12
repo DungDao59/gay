@@ -3,11 +3,12 @@ import java.time.*;
 import java.util.*;
 /*
  * @author Dao Tien Dung - s4088577
+ * Presenter inherits Person based class
  */
 
 
 public class Presenter extends Person {
-    private String role;
+    private PresenterRole role;
     private List<Session> sessions;
 
     public Presenter(String fullName, LocalDateTime dateOfBirth, String contactInformation){
@@ -15,7 +16,7 @@ public class Presenter extends Person {
     }
 
     // GETTER
-    public String getRole(){
+    public PresenterRole getRole(){
         return role;
     }
 

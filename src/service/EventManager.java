@@ -10,6 +10,11 @@ import model.Ticket;
 import model.TicketType;
 import model.StatusType;
 
+/*
+ * @author Dao Tien Dung - s4088577
+ * Interface for Event Manager implementation
+ */
+
 public interface EventManager {
     /*
      * CRUD ATTENDEE METHODS

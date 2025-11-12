@@ -3,6 +3,7 @@ import java.util.*;
 import java.time.*;
 /*
  * @author Dao Tien Dung - s4088577
+ * Event class for event
  */
 public class Event {
     private int eventId;

@@ -3,9 +3,11 @@ import java.time.*;
 import java.util.*;
 /*
  * @author Dao Tien Dung - s4088577
+ * Attendee inherits Person base class 
  */
 
 public class Attendee extends Person{
+    private int attendeeId;
     private List<Session> registeredSession;
     private List<Ticket> tickets;
 
@@ -14,6 +16,10 @@ public class Attendee extends Person{
     }
 
     // GETTER
+    public int getAttendeeId(){
+        return attendeeId;
+    }
+
     public List<Session> getRegisteredSession(){
         return registeredSession; 
     }
@@ -22,5 +28,9 @@ public class Attendee extends Person{
         return tickets;
     }
 
+    // SETTER 
+    public void setAttendeeId(int id){
+        attendeeId = id;
+    }
     
 }
