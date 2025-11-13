@@ -66,8 +66,9 @@ public interface EventManager {
     void deleteSession(int id);
     List<Session> getAllSessions();
     Session getSessionById(int id);
-    List<Session> getSessionsByDate(LocalDateTime time);
-    List<Session> getSessionsByPresenterName(String presenterName);
+    // Add later
+    // List<Session> getSessionsByDate(LocalDateTime time);
+    // List<Session> getSessionsByPresenterName(String presenterName);
 
     // Check session capacity
     boolean checkSessionCapacity(int id);

@@ -23,6 +23,10 @@ public class Event {
     }
 
     // GETTER
+    public int getEventId(){
+        return eventId;
+    }
+
     public String getName(){
         return name;
     }
@@ -41,5 +45,10 @@ public class Event {
 
     public LocalDateTime getEndDate(){
         return endDate;
+    }
+
+    // SETTER
+    public void setEventId(int id){
+        eventId = id;
     }
 }

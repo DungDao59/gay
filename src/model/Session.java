@@ -8,6 +8,7 @@ import java.time.*;
 
 public class Session {
     private int sessionId;
+    private int eventId;
     private String title;
     private String description;
     private LocalDateTime scheduleDateTime;
@@ -16,7 +17,8 @@ public class Session {
     private List<Attendee> attendees;
     private List<Presenter> presenters;
 
-    public Session(String title, String description, LocalDateTime scheduleDateTime, String venue, int capacity){
+    public Session(int eventId,String title, String description, LocalDateTime scheduleDateTime, String venue, int capacity){
+        this.eventId = eventId;
         this.title = title;
         this.description = description;
         this.scheduleDateTime = scheduleDateTime;
@@ -25,6 +27,14 @@ public class Session {
     }
 
     // GETTER
+    public int getSessionId(){
+        return sessionId;
+    }
+
+    public int getEventId(){
+        return eventId;
+    }
+
     public String getTitle(){
         return title;
     }
@@ -51,5 +61,10 @@ public class Session {
 
     public List<Presenter> returnPresenters(){
         return presenters;
+    }
+
+    // SETTER
+    public void setSessionId(int id){
+        sessionId = id;
     }
 }
