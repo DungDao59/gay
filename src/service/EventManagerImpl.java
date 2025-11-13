@@ -8,6 +8,8 @@ import model.Event;
 import model.Presenter;
 import model.PresenterRole;
 import model.Session;
+import model.StatusType;
+import model.Ticket;
 import util.Database;
 
 /*
@@ -23,6 +25,7 @@ public class EventManagerImpl implements EventManager {
     private final PresenterService presenterService = new PresenterService();
     private final EventService eventService = new EventService();
     private final SessionService sessionService = new SessionService();
+    private final TicketService ticketService = new TicketService();
 
     /*
      * ATTENDEE CRUD METHODS
@@ -191,6 +194,40 @@ public class EventManagerImpl implements EventManager {
     // Check session capacity
     public boolean checkSessionCapacity(int id){
         return sessionService.checkSessionCapacity(id);
+    };
+
+    /*
+     * CRUD TICKET METHODS
+     */
+
+    // Add Ticket to Database
+    @Override
+    public void addTicket(Ticket newTicket){
+        ticketService.addTicket(newTicket);
+    };
+    
+    // Update a Ticket inside Database
+    @Override
+    public void updateTicket(Ticket ticket){
+        ticketService.updateTicket(ticket);
+    };
+
+    // Delete Ticket from Database
+    @Override
+    public void deleteTicket(int id){
+        ticketService.deleteTicket(id);
+    };
+    public List<Ticket> getAllTickets(){
+        return ticketService.getAllTickets();
+    };
+    public Ticket getTicketById(int id){
+        return ticketService.getTicketById(id);
+    };
+
+    // Update ticket status
+    @Override
+    public void updateTicketStatus(int ticketId, StatusType status){
+        ticketService.updateTicketStatus(ticketId, status);
     };
 
 }

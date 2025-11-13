@@ -10,18 +10,22 @@ public class Ticket {
     private TicketType type;
     private double price;
     private StatusType status;
-    private Attendee attendee;
-    private Event event;
+    private int attendeeId;
+    private int eventId;
 
-    public Ticket(TicketType type, double price, StatusType status, Attendee attendee, Event event){
+    public Ticket(TicketType type, double price, StatusType status, int attendeeId, int eventId){
         this.type = type;
         this.price = price;
         this.status = status;
-        this.attendee = attendee;
-        this.event = event;
+        this.attendeeId = attendeeId;
+        this.eventId = eventId;
     }
 
     // GETTER
+    public int getTicketId(){
+        return ticketId;
+    }
+
     public TicketType getType(){
         return type;
     }
@@ -34,11 +38,16 @@ public class Ticket {
         return status;
     }
 
-    public Attendee getAttendee(){
-        return attendee;
+    public int getAttendee(){
+        return attendeeId;
     }
 
-    public Event getEvent(){
-        return event;
+    public int getEvent(){
+        return eventId;
+    }
+
+    // SETTER
+    public void setTicketId(int id){
+        ticketId = id;
     }
 }

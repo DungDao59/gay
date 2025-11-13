@@ -4,8 +4,6 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 
-import javax.naming.spi.DirStateFactory.Result;
-
 import model.Session;
 import util.Database;
 
