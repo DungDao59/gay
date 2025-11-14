@@ -1,31 +1,30 @@
 package service;
-import java.sql.*;
+
 import java.time.*;
-import java.time.format.DateTimeFormatter;
 import java.util.*;
+
 import model.Attendee;
 import model.Event;
+import model.EventType;
 import model.Presenter;
-import model.PresenterRole;
 import model.Session;
 import model.StatusType;
 import model.Ticket;
-import util.Database;
+import model.TicketType;
 
 /*
  * @author Dao Tien Dung - s4088577
  * Create fully concrete method for CRUD
  */
 public class EventManagerImpl implements EventManager {
-    // Set up DateFormatter for every field using LocalDateTime
-    private static final DateTimeFormatter F = DateTimeFormatter.ISO_LOCAL_DATE_TIME;
-
     //Calling service of each class
     private final AttendeeService attendeeService = new AttendeeService();
     private final PresenterService presenterService = new PresenterService();
     private final EventService eventService = new EventService();
     private final SessionService sessionService = new SessionService();
     private final TicketService ticketService = new TicketService();
+    private final ScheduleService scheduleService = new ScheduleService();
+    private final ReportService reportService = new ReportService();
 
     /*
      * ATTENDEE CRUD METHODS
@@ -187,11 +186,16 @@ public class EventManagerImpl implements EventManager {
         return sessionService.getSessionById(id);
     };
 
-    //Add later
-    // List<Session> getSessionsByDate(LocalDateTime time);
+    // Get Session by date from Database
+    @Override
+    public List<Session> getSessionsByDate(LocalDateTime time){
+        return sessionService.getSessionByDate(time);
+    };
+
     // List<Session> getSessionsByPresenterName(String presenterName);
 
     // Check session capacity
+    @Override
     public boolean checkSessionCapacity(int id){
         return sessionService.checkSessionCapacity(id);
     };
@@ -217,9 +221,14 @@ public class EventManagerImpl implements EventManager {
     public void deleteTicket(int id){
         ticketService.deleteTicket(id);
     };
+    
+    //Get all Ticket from Database
+    @Override
     public List<Ticket> getAllTickets(){
         return ticketService.getAllTickets();
     };
+
+    // Get Ticket by Id from Database
     public Ticket getTicketById(int id){
         return ticketService.getTicketById(id);
     };
@@ -229,5 +238,62 @@ public class EventManagerImpl implements EventManager {
     public void updateTicketStatus(int ticketId, StatusType status){
         ticketService.updateTicketStatus(ticketId, status);
     };
+
+    /*
+     * CRUD SCHEDULE METHODS
+     */
+
+    // Check conflict for Presenter
+    @Override
+    public boolean checkScheduleConflictForPresenter(int presenterId, LocalDateTime time){
+        return scheduleService.checkScheduleConflictForPresenter(presenterId, time);
+    };
+
+    // Check conflict for Attendee
+    @Override
+    public boolean checkScheduleConflictForAttendee(int attendeeId, LocalDateTime time){
+        return scheduleService.checkScheduleConflictForAttendee(attendeeId, time);
+    };
+
+    // Check conflict for venue 
+    @Override
+    public boolean checkScheduleConflictForVenue(String venue, LocalDateTime time){
+        return scheduleService.checkScheduleConflictForVenue(venue, time);
+    };
+
+    // Get the schedule for Presenter by ID
+    @Override
+    public List <Session> getScheduleForPresenter(int presenterId){
+        return scheduleService.getScheduleForPresenter(presenterId);
+    };
+
+    // Get the schedule for Attendee by ID
+    @Override
+    public List <Session> getScheduleForAttendee(int attendeeId){
+        return scheduleService.getScheduleForAttendee(attendeeId);
+    };
+
+    /*
+     * CRUD REPORT METHODS
+     */
+
+    // Get event sorted by date from database
+    @Override
+    public List<Event> getEventsSortedByDate(){
+        return reportService.getEventSortedByDate();
+    };
+
+    // Get event by type from database
+    @Override
+    public List<Event> getEventsByType(EventType type){
+        return reportService.getEventByType(type);
+    };
+
+    //Get tickets by type from database
+    @Override
+    public List<Ticket> getTicketsByType(TicketType type){
+        return reportService.getTicketByType(type);
+    };
+
 
 }

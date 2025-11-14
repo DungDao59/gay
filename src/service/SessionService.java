@@ -1,4 +1,5 @@
 package service;
+
 import java.sql.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -133,6 +134,39 @@ public class SessionService {
             e.printStackTrace();
         }
         return null;
+    }
+
+    // Get the Session by date
+    public List<Session> getSessionByDate(LocalDateTime time){
+        List<Session> list = new ArrayList<>();
+        try(Connection conn = getConnection()){
+
+            String commandGetByDateSQL = "SELECT * FROM Session WHERE scheduleDateTime LIKE ?";
+            // Execute get session by schedule date time inside SQL
+            try(PreparedStatement command = conn.prepareStatement(commandGetByDateSQL)){
+                command.setString(1, time.toLocalDate().toString() + "%");
+
+                ResultSet result = command.executeQuery();
+                while(result.next()){
+                    Session session = new Session(
+                        result.getInt("eventId"),
+                        result.getString("title"),
+                        result.getString("description"),
+                        LocalDateTime.parse(result.getString("scheduleDateTime"), F),
+                        result.getString("venue"),
+                        result.getInt("capacity")
+                    );
+                    session.setSessionId(result.getInt("sessionId"));
+
+                    list.add(session);
+                }
+
+                System.out.println("[Sucess] Get all Session by Date successfully");
+            }
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
+        return list;
     }
 
     // Check session capacity if there is enough or not

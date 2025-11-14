@@ -1,6 +1,8 @@
 package service;
+
 import java.util.*;
 import java.time.*;
+
 import model.Attendee;
 import model.Event;
 import model.EventType;
@@ -67,7 +69,7 @@ public interface EventManager {
     List<Session> getAllSessions();
     Session getSessionById(int id);
     // Add later
-    // List<Session> getSessionsByDate(LocalDateTime time);
+    List<Session> getSessionsByDate(LocalDateTime time);
     // List<Session> getSessionsByPresenterName(String presenterName);
 
     // Check session capacity
@@ -90,8 +92,9 @@ public interface EventManager {
     /*
      * CRUD SCHEDULE METHODS
      */
-    // Check presenter if there is conflict for another session or not
     boolean checkScheduleConflictForPresenter(int presenterId, LocalDateTime time);
+    boolean checkScheduleConflictForAttendee(int attendeeId, LocalDateTime time);
+    boolean checkScheduleConflictForVenue(String venue, LocalDateTime time);
 
     List <Session> getScheduleForPresenter(int presenterId);
     List <Session> getScheduleForAttendee(int attendeeId);
@@ -100,7 +103,7 @@ public interface EventManager {
     /*
      * CRUD REPORT METHODS
      */
-    List<Event> getEventSortedByDate();
+    List<Event> getEventsSortedByDate();
     List<Event> getEventsByType(EventType type);
-    List<Ticket> getTicketsByCategory(TicketType type);
+    List<Ticket> getTicketsByType(TicketType type);
 }
