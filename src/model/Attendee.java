@@ -7,8 +7,8 @@ import java.util.*;
  */
 
 public class Attendee extends Person{
-    private List<Session> registeredSession;
-    private List<Ticket> tickets;
+    private List<Session> registeredSession = new ArrayList<>();
+    private List<Ticket> tickets = new ArrayList<>();
 
     public Attendee(String fullName, LocalDateTime dateOfBirth, String contactInformation){
         super(fullName,dateOfBirth,contactInformation);

@@ -3,6 +3,13 @@ package service;
 import java.time.*;
 import java.util.*;
 
+import dao.AttendeeDao;
+import dao.EventDao;
+import dao.PresenterDao;
+import dao.ReportDao;
+import dao.ScheduleDao;
+import dao.SessionDao;
+import dao.TicketDao;
 import model.Attendee;
 import model.Event;
 import model.EventType;
@@ -18,13 +25,13 @@ import model.TicketType;
  */
 public class EventManagerImpl implements EventManager {
     //Calling service of each class
-    private final AttendeeService attendeeService = new AttendeeService();
-    private final PresenterService presenterService = new PresenterService();
-    private final EventService eventService = new EventService();
-    private final SessionService sessionService = new SessionService();
-    private final TicketService ticketService = new TicketService();
-    private final ScheduleService scheduleService = new ScheduleService();
-    private final ReportService reportService = new ReportService();
+    private final AttendeeDao attendeeService = new AttendeeDao();
+    private final PresenterDao presenterService = new PresenterDao();
+    private final EventDao eventService = new EventDao();
+    private final SessionDao sessionService = new SessionDao();
+    private final TicketDao ticketService = new TicketDao();
+    private final ScheduleDao scheduleService = new ScheduleDao();
+    private final ReportDao reportService = new ReportDao();
 
     /*
      * ATTENDEE CRUD METHODS

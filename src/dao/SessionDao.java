@@ -1,4 +1,4 @@
-package service;
+package dao;
 
 import java.sql.*;
 import java.time.LocalDateTime;
@@ -13,7 +13,7 @@ import util.Database;
  * Session CRUD file
  */
 
-public class SessionService {
+public class SessionDao {
     // Set default date format for every date
     private static final DateTimeFormatter F = DateTimeFormatter.ISO_LOCAL_DATE_TIME;
 
@@ -162,6 +162,39 @@ public class SessionService {
                 }
 
                 System.out.println("[Sucess] Get all Session by Date successfully");
+            }
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
+        return list;
+    }
+
+    // Get all Sessions from Database by Name
+    public List<Session> getSessionByDate(String presenterName){
+        List<Session> list = new ArrayList<>();
+        try(Connection conn = getConnection()){
+
+            String commandGetByDateSQL = "SELECT s.* FROM Session s JOIN Session_Presenter sp ON s.sessionId = sp.sessionId JOIN Presenter p ON sp.presenterId = p.presenterId JOIN Person per ON p.presenterId = per.id WHERE per.fullName = ?";
+            // Execute get session by schedule date time inside SQL
+            try(PreparedStatement command = conn.prepareStatement(commandGetByDateSQL)){
+                command.setString(1, presenterName);
+
+                ResultSet result = command.executeQuery();
+                while(result.next()){
+                    Session session = new Session(
+                        result.getInt("eventId"),
+                        result.getString("title"),
+                        result.getString("description"),
+                        LocalDateTime.parse(result.getString("scheduleDateTime"), F),
+                        result.getString("venue"),
+                        result.getInt("capacity")
+                    );
+                    session.setSessionId(result.getInt("sessionId"));
+
+                    list.add(session);
+                }
+
+                System.out.println("[Sucess] Get all Session by presenter name successfully");
             }
         }catch(SQLException e){
             e.printStackTrace();

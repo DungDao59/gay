@@ -21,11 +21,12 @@ public interface EventManager {
     /*
      * CRUD ATTENDEE METHODS
      */
-    void addAttendee(Attendee newAttendee);
-    void updateAttendee(Attendee attendee);
+    void addAttendee(Attendee newAttendee) throws Exception;
+    void updateAttendee(Attendee attendee) throws Exception;
     void deleteAttendee(int id);
     List<Attendee> getAllAttendees();
     Attendee getAttendeeById(int id);
+    Attendee getAttendeesByName(String name);
 
     // Register attendee to session
     void registerAttendeeToSession(int attendeeId, int sessionId);
@@ -42,6 +43,7 @@ public interface EventManager {
     void deletePresenter(int id);
     List<Presenter> getAllPresenter();
     Presenter getPresenterById(int id);
+    Presenter getPresenterByName(String name);
 
     // Register presenter to session
     void registerPresenterToSession(int presenterId, int sessionId);
@@ -58,7 +60,7 @@ public interface EventManager {
     void deleteEvent(int id);
     List<Event> getAllEvents();
     Event getEventById(int id);
-
+    List<Event> getEventsByPresenter(int presentId);
 
     /*
      * CRUD SESSION METHODS
@@ -68,9 +70,8 @@ public interface EventManager {
     void deleteSession(int id);
     List<Session> getAllSessions();
     Session getSessionById(int id);
-    // Add later
     List<Session> getSessionsByDate(LocalDateTime time);
-    // List<Session> getSessionsByPresenterName(String presenterName);
+    List<Session> getSessionsByPresenterName(String presenterName);
 
     // Check session capacity
     boolean checkSessionCapacity(int id);
@@ -84,6 +85,7 @@ public interface EventManager {
     void deleteTicket(int id);
     List<Ticket> getAllTickets();
     Ticket getTicketById(int id);
+    List<Ticket> getTicketsSortedByPrice();
 
     // Update ticket status
     void updateTicketStatus(int ticketId, StatusType status);
@@ -106,4 +108,5 @@ public interface EventManager {
     List<Event> getEventsSortedByDate();
     List<Event> getEventsByType(EventType type);
     List<Ticket> getTicketsByType(TicketType type);
+    void exportReport(String filename, List<?> data);
 }

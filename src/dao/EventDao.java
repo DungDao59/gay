@@ -1,4 +1,4 @@
-package service;
+package dao;
 
 import java.sql.*;
 import java.time.*;
@@ -14,7 +14,7 @@ import util.Database;
  * Event CRUD files
  */
 
-public class EventService {
+public class EventDao {
     // Set default date format for every date
     private static final DateTimeFormatter F = DateTimeFormatter.ISO_LOCAL_DATE_TIME;
 
@@ -139,5 +139,31 @@ public class EventService {
         return null;
     }
 
+    // Get all events from database by presenter
+    public List<Event> getEventsByPresenter(int presenterId){
+        List<Event> list = new ArrayList<>();
+        
+        try(Connection conn = getConnection()){
 
+            String commandGetAllSQL = "SELECT DISTINCT e.* FROM Event e JOIN Session s ON e.eventId = s.sessionId JOIN Session_Presenter sp ON s.sessionId = sp.sessionId WHERE sp.presenterId = ?";
+            // Execute get all event table from database by Presenter
+            try(PreparedStatement command = conn.prepareStatement(commandGetAllSQL)){
+                command.setInt(1, presenterId);
+           
+                ResultSet result = command.executeQuery();
+                while(result.next()){
+                    Event e = new Event(result.getString("name"), EventType.valueOf(result.getString("type")), result.getString("location"), LocalDateTime.parse(result.getString("startDate"),F), LocalDateTime.parse(result.getString("endDate"),F));
+                    e.setEventId(result.getInt("eventId"));
+
+                    list.add(e);
+                }
+                System.out.println("[Success] Get all presenters by name successfully");
+            }
+
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
+
+        return list;
+    }
 }

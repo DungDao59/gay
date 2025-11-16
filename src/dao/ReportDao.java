@@ -1,4 +1,4 @@
-package service;
+package dao;
 
 import java.sql.*;
 import java.util.*;
@@ -17,7 +17,7 @@ import util.Database;
  * Report CRUD file
  */
 
-public class ReportService {
+public class ReportDao {
     // Set default date format for every date
     private static final DateTimeFormatter F = DateTimeFormatter.ISO_LOCAL_DATE_TIME;
 

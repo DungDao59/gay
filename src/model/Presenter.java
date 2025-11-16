@@ -9,7 +9,7 @@ import java.util.*;
 
 public class Presenter extends Person {
     private PresenterRole role;
-    private List<Session> sessions;
+    private List<Session> sessions = new ArrayList<>();
 
     public Presenter(String fullName, LocalDateTime dateOfBirth, String contactInformation, PresenterRole role){
         super(fullName, dateOfBirth, contactInformation);

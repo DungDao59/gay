@@ -1,4 +1,4 @@
-package service;
+package dao;
 
 import java.util.*;
 import java.sql.*;
@@ -14,7 +14,7 @@ import model.Session;
  * Schedule CRUD file
  */
 
-public class ScheduleService {
+public class ScheduleDao {
     // Set default date format for every date
     private static final DateTimeFormatter F = DateTimeFormatter.ISO_LOCAL_DATE_TIME;
 

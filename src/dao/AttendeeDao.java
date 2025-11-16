@@ -1,4 +1,4 @@
-package service;
+package dao;
 
 import java.sql.*;
 import java.time.format.DateTimeFormatter;
@@ -13,7 +13,7 @@ import util.Database;
  * Attendee CRUD files
  */
 
-public class AttendeeService {
+public class AttendeeDao {
     // Set default date format for every date
     private static final DateTimeFormatter F = DateTimeFormatter.ISO_LOCAL_DATE_TIME;
 
@@ -135,7 +135,6 @@ public class AttendeeService {
     }
 
     // Get attendee by id
-    
     public Attendee getAttendeeById(int id){
         try(Connection conn = getConnection()){
 
@@ -161,8 +160,32 @@ public class AttendeeService {
         return null;
     }
 
+    // Get all attendees from Database by name
+    public List<Attendee> getAttendeesByName(String name){
+        List<Attendee> list = new ArrayList<>();
+        try(Connection conn = getConnection()){
+            String commandGetByNameSQL = "SELECT p.id, p.fullName, p.dateOfBirth, p.contactInfo FROM Person p JOIN Attendee a ON p.id=a.attendeeId WHERE p.fullname LIKE ?";
+            try(PreparedStatement command = conn.prepareStatement(commandGetByNameSQL)){
+                command.setString(1, "%" + name + "%");
+                ResultSet result = command.executeQuery();
+
+                //Check if there is a next row for result
+                while(result.next()){
+                    Attendee a = new Attendee(result.getString("fullName"), result.getString("dateOfBirth") != null ? LocalDateTime.parse(result.getString("dateOfBirth"),F) : null, result.getString("contactInfo"));
+                    a.setId(result.getInt("id"));
+
+                    list.add(a);
+
+                }
+            }
+            System.out.println("[Success] Get attendees by name successfully");
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
+        return list;
+    }
+
     // Create a registration for attendee to session
-    
     public void registerAttendeeToSession(int attendeeId, int sessionId){
         try(Connection conn = getConnection()){
 
@@ -181,7 +204,6 @@ public class AttendeeService {
     }
 
     // Attendee purchase ticket
-    
     public void attendeePurchaseTicket(int attendeeId, int ticketId){
         try(Connection conn = getConnection()){
 

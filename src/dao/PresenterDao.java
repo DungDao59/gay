@@ -1,4 +1,4 @@
-package service;
+package dao;
 
 import java.sql.*;
 import java.time.*;
@@ -14,7 +14,7 @@ import util.Database;
  * Presenter CRUD files
  */
 
-public class PresenterService {
+public class PresenterDao {
     // Set default date format for every date
     private static final DateTimeFormatter F = DateTimeFormatter.ISO_LOCAL_DATE_TIME;
 
@@ -116,7 +116,6 @@ public class PresenterService {
     }
 
     // Get all Presnters inside Database
-    
     public List<Presenter> getAllPresenter(){
         List<Presenter> list = new ArrayList<>();
         try(Connection conn = getConnection()){
@@ -141,7 +140,6 @@ public class PresenterService {
     }
 
     // Get presenter by Id inside Database
-    
     public Presenter getPresenterById(int id){
         try(Connection conn = getConnection()){
 
@@ -156,7 +154,7 @@ public class PresenterService {
                     Presenter newPresenter = new Presenter(result.getString("fullName"), result.getString("dateOfBirth") != null ? LocalDateTime.parse(result.getString("dateOfBirth"),F) : null, result.getString("contactInfo"), PresenterRole.valueOf(result.getString("role")));
                     newPresenter.setId(result.getInt("id"));
 
-                    System.out.println("[Success] Get attendee by Id successfully");
+                    System.out.println("[Success] Get Presenter by Id successfully");
                     return newPresenter;
                 }
                 
@@ -168,8 +166,35 @@ public class PresenterService {
         return null;
     }
 
-    // Register a presenter to a session
+    // Get all presenters from Database by name
+    public List<Presenter> getPresentersByName(String name){
+        List<Presenter> list = new ArrayList<>();
+        try(Connection conn = getConnection()){
+
+            String commandGetPresenterId = "SELECT p.*, pr.role FROM Person p join Presenter pr ON p.id = pr.presenterId WHERE p.fullName LIKE ?";
+            // Execute SQL command to get all the info of the presenter based on Person and Presenter table.
+            try(PreparedStatement command = conn.prepareStatement(commandGetPresenterId)){
+                command.setString(1, "%" + name + "%");
+                
+                ResultSet result = command.executeQuery();
+                // If there exist the role beneath the header
+                while(result.next()){
+                    Presenter newPresenter = new Presenter(result.getString("fullName"), result.getString("dateOfBirth") != null ? LocalDateTime.parse(result.getString("dateOfBirth"),F) : null, result.getString("contactInfo"), PresenterRole.valueOf(result.getString("role")));
+                    newPresenter.setId(result.getInt("id"));
+
+                    list.add(newPresenter);
+                }
+                System.out.println("[Success] Get all presenters by name successfully");
+                
+            }
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
     
+        return list;
+    }
+
+    // Register a presenter to a session
     public void registerPresenterToSession(int presenterId, int sessionId){
         try(Connection conn = getConnection()){
 

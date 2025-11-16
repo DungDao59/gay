@@ -1,4 +1,4 @@
-package service;
+package dao;
 
 import java.sql.*;
 import java.time.format.DateTimeFormatter;
@@ -14,7 +14,7 @@ import util.Database;
  * Ticket CRUD file
  */
 
-public class TicketService {
+public class TicketDao {
     // Set default date format for every date
     private static final DateTimeFormatter F = DateTimeFormatter.ISO_LOCAL_DATE_TIME;
 
@@ -144,6 +144,37 @@ public class TicketService {
             e.printStackTrace();
         }
         return null;
+    }
+
+    // Get all tickets sorted by Price from database
+    public List<Ticket> getTicketsSortedByPrice(){
+        List<Ticket> list = new ArrayList<>();
+        try(Connection conn = getConnection()){
+            
+            String commandGetByPrice = "SELECT * FROM Ticket ORDER BY price ASC";
+            // Execute get all ticket by price command from database
+            try(PreparedStatement command = conn.prepareStatement(commandGetByPrice)){
+
+                ResultSet result = command.executeQuery();
+                while(result.next()){
+                    Ticket t = new Ticket(
+                        TicketType.valueOf(result.getString("type")),
+                        result.getDouble("price"), 
+                        StatusType.valueOf(result.getString("status")),
+                        result.getInt("attendeeId"),    
+                        result.getInt("eventId")
+                    );
+                    t.setTicketId(result.getInt("ticketId"));
+
+                    list.add(t);
+                }
+                System.out.println("[Success] Get all ticket sorted by price successfully");
+
+            }
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
+        return list;
     }
 
     // Update ticket status from database
