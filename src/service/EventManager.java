@@ -19,7 +19,7 @@ import model.StatusType;
 
 public interface EventManager {
     /*
-     * CRUD ATTENDEE METHODS
+     * CRUD ATTENDEE SERVICE METHODS
      */
     void addAttendee(Attendee newAttendee) throws Exception;
     void updateAttendee(Attendee attendee) throws Exception;
@@ -36,7 +36,7 @@ public interface EventManager {
 
     
     /*
-     * CRUD PRESENTER METHODS
+     * CRUD PRESENTER SERVICE METHODS
      */
     void addPresenter(Presenter newPresenter) throws Exception;
     void updatePresenter(Presenter presenter) throws Exception;
@@ -53,21 +53,25 @@ public interface EventManager {
 
 
     /*
-     * CRUD EVENT METHODS
+     * CRUD EVENT SERVICE METHODS
      */
-    void addEvent(Event newEvent);
-    void updateEvent(Event event);
-    void deleteEvent(int id);
+    void addEvent(Event newEvent) throws Exception;
+    void updateEvent(Event event) throws Exception;
+    void deleteEvent(int id) throws Exception;
     List<Event> getAllEvents();
     Event getEventById(int id);
     List<Event> getEventsByPresenter(int presentId);
+    List<Event> getEventsSortedByDate();
+    List<Event> getEventsByType(EventType type);
+
+
 
     /*
-     * CRUD SESSION METHODS
+     * CRUD SESSION SERVICE METHODS
      */
-    void addSession(Session newSession);
-    void updateSession(Session session);
-    void deleteSession(int id);
+    void addSession(Session newSession) throws Exception;
+    void updateSession(Session session) throws Exception;
+    void deleteSession(int id) throws Exception;
     List<Session> getAllSessions();
     Session getSessionById(int id);
     List<Session> getSessionsByDate(LocalDateTime time);
@@ -78,21 +82,22 @@ public interface EventManager {
 
 
     /*
-     * CRUD TICKET METHODS
+     * CRUD TICKET SERVICE METHODS
      */
-    void addTicket(Ticket newTicket);
-    void updateTicket(Ticket ticket);
+    void addTicket(Ticket newTicket) throws Exception;
+    void updateTicket(Ticket ticket) throws Exception;
     void deleteTicket(int id);
     List<Ticket> getAllTickets();
     Ticket getTicketById(int id);
     List<Ticket> getTicketsSortedByPrice();
+    List<Ticket> getTicketsByType(TicketType type);
 
     // Update ticket status
     void updateTicketStatus(int ticketId, StatusType status);
 
 
     /*
-     * CRUD SCHEDULE METHODS
+     * CRUD SCHEDULE SERVICE METHODS
      */
     boolean checkScheduleConflictForPresenter(int presenterId, LocalDateTime time);
     boolean checkScheduleConflictForAttendee(int attendeeId, LocalDateTime time);
@@ -103,10 +108,7 @@ public interface EventManager {
 
 
     /*
-     * CRUD REPORT METHODS
+     * CRUD REPORT SERVICE METHODS
      */
-    List<Event> getEventsSortedByDate();
-    List<Event> getEventsByType(EventType type);
-    List<Ticket> getTicketsByType(TicketType type);
     void exportReport(String filename, List<?> data);
 }

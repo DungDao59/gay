@@ -150,11 +150,11 @@ public class EventManagerImpl implements EventManager {
     @Override
     public void addPresenter(Presenter newPresenter) throws Exception{
         // Check if there exist an Presenter
-        if(newPresenter == null) throw new Exception("Attendee can't be null");
+        if(newPresenter == null) throw new Exception("Presenter can't be null");
 
         // Check if name is valid
         if(newPresenter.getFullName() == null || newPresenter.getFullName().isBlank()){
-            throw new Exception("Attendee name can't be empty");
+            throw new Exception("Presenter name can't be empty");
         }
 
         // Add Presenter to database
@@ -165,11 +165,11 @@ public class EventManagerImpl implements EventManager {
     @Override
     public void updatePresenter(Presenter presenter) throws Exception{
         // Check if there exist an Presenter
-        if(presenter == null) throw new Exception("Attendee can't be null");
+        if(presenter == null) throw new Exception("Presenter can't be null");
 
         // Check if ID exists
         if(presenterDao.getPresenterById(presenter.getId()) == null){
-            throw new Exception("Attendee ID cannot be found");
+            throw new Exception("Presenter ID cannot be found");
         }
 
         // Update Presenter inside Database
@@ -181,7 +181,7 @@ public class EventManagerImpl implements EventManager {
     public void deletePresenter(int id) throws Exception{
         // Check if ID exists
         if(presenterDao.getPresenterById(id) == null){
-            throw new Exception("Attendee ID cannot be found");
+            throw new Exception("Presenter ID cannot be found");
         }
     
         // Delete Presenter from Database
@@ -232,29 +232,254 @@ public class EventManagerImpl implements EventManager {
     }
 
     /*
-     * EVENT CRUD METHODS
+     * EVENT SERVICE METHODS
      */
 
+   
+    // Check validation and add Event to Database
+    @Override
+    public void addEvent(Event newEvent) throws Exception{
+        // Check if there exist an Event
+        if(newEvent == null) throw new Exception("Attendee can't be null");
+
+        // Check if name is valid
+        if(newEvent.getName() == null || newEvent.getName().isBlank()){
+            throw new Exception("Event name can't be empty");
+        }
+
+        // Add Event to database
+        eventDao.addEvent(newEvent);
+    }    
+
+    // Update an Event inside Database
+    @Override
+    public void updateEvent(Event event) throws Exception{
+        // Check event presentation
+        if(event == null) throw new Exception("Event can't be null");
+
+        // Check if ID exists
+        if(eventDao.getEventById(event.getEventId()) == null){
+            throw new Exception("Event ID cannot be found");
+        }
+
+        // Update Presenter inside Database
+        eventDao.updateEvent(event);
+    }
+
+    // Delete an Event from Database by Id
+    @Override
+    public void deleteEvent(int id){
+        // Check if event exist inside Database
+        if(eventDao.getEventById(id) == null){
+            throw new RuntimeException("Event ID cannot be found");
+        }
     
+        // Delete Presenter from Database
+        eventDao.deleteEvent(id);
+    }
+
+    // Get all Events from Database
+    @Override
+    public List<Event> getAllEvents(){
+        return eventDao.getAllEvents();
+    }
+
+    // Get all Events from Database by Id
+    @Override
+    public Event getEventById(int id){
+        return eventDao.getEventById(id);
+    }
+
+    // Get all Events by Presenter name from Database
+    @Override
+    public List<Event> getEventsByPresenter(int presenterId){
+        return eventDao.getEventsByPresenter(presenterId);
+    }
+
+    // Get all Events sorted by Date
+    @Override
+    public List<Event> getEventsSortedByDate(){
+        return eventDao.getEventSortedByDate();
+    }
+
+    // Get all Events by Type
+    public List<Event> getEventsByType(EventType type){
+        return eventDao.getEventByType(type);
+    }
+
 
     /*
-     * CRUD SESSION METHODS
+     * CRUD SESSION SERVICE
      */
 
+    // Check validation and add Session to Database
+    @Override
+    public void addSession(Session newSession) throws Exception{
+        // Check if session existed or not
+        if(newSession == null) throw new Exception("Session can't be null");
+
+        // Add session to Database
+        sessionDao.addSession(newSession);
+    }
+
+    // Update a Session inside Database
+    @Override
+    public void updateSession(Session session) throws Exception{
+        // Check if session existed or not
+        if(session == null) throw new Exception("Session can't be null");
+    
+        // Update session for database
+        sessionDao.updateSession(session);
+    }
+
+    // Delete a Session inside Database by Id
+    @Override
+    public void deleteSession(int id) throws Exception{
+        // Check if Session exists inside Database
+        if(sessionDao.getSessionById(id) == null) throw new RuntimeException("Session not found");
+
+        sessionDao.deleteSession(id);
+    }
+
+    // Get all Sessions inside Database
+    @Override
+    public List<Session> getAllSessions(){
+        return sessionDao.getAllSessions();
+    }
+
+    // Get Session by Id from Database
+    @Override
+    public Session getSessionById(int id){
+        return sessionDao.getSessionById(id);
+    }
+
+    // Get all Sessions by date from Database
+    @Override
+    public List<Session> getSessionsByDate(LocalDateTime time){
+        return sessionDao.getSessionByDate(time);
+    }
+
+    // Get all Sessions by Presenter name from Database
+    @Override
+    public List<Session> getSessionsByPresenterName(String presenterName){
+        return sessionDao.getSessionByPresenterName(presenterName);
+    }
+
+    // Check session capacity for session by Id 
+    @Override
+    public boolean checkSessionCapacity(int id){
+        return sessionDao.checkSessionCapacity(id);
+    }
     
     /*
      * CRUD TICKET METHODS
      */
 
+    // Check validation and add Ticket to Database
+    @Override
+    public void addTicket(Ticket newTicket) throws Exception{
+        // Check ticket existence
+        if(newTicket == null) throw new Exception("Ticket can't be null");
+
+        // Add ticket to Database
+        ticketDao.addTicket(newTicket);
+    }
+
+    // Update a Ticket inside Database
+    @Override
+    public void updateTicket(Ticket ticket) throws Exception{
+        // Check ticket existence
+        if(ticket == null) throw new Exception("Ticket can't be null");
     
+        // Update ticket to Database
+        ticketDao.updateTicket(ticket);
+    }
+
+    // Delete a ticket from Database by Id
+    @Override
+    public void deleteTicket(int id){
+        // Check if the ticket id found inside Database
+        if(ticketDao.getTicketById(id) == null) throw new RuntimeException("No ticket found");
+
+        ticketDao.deleteTicket(id);
+    }
+
+    // Get all tickets inside Database
+    @Override
+    public List<Ticket> getAllTickets(){
+        return ticketDao.getAllTickets();
+    }
+
+    // Get a Ticket from Database by Id
+    @Override
+    public Ticket getTicketById(int id){
+        return ticketDao.getTicketById(id);
+    }
+
+    // Get all Tickets sorted by price
+    @Override
+    public List<Ticket> getTicketsSortedByPrice(){
+        return ticketDao.getTicketsSortedByPrice();
+    }
+
+    // Get all Tickets by Type
+    @Override
+    public List<Ticket> getTicketsByType(TicketType type){
+        return ticketDao.getAllTickets();
+    }
+
+
+    // Update ticket status
+    public void updateTicketStatus(int ticketId, StatusType status){
+        Ticket ticket= ticketDao.getTicketById(ticketId);
+        if(ticket == null){
+            throw new RuntimeException("Ticket not found");
+        }
+
+        ticket.setStatus(status);
+        ticketDao.updateTicketStatus(ticketId, status);
+    }
 
     /*
-     * CRUD SCHEDULE METHODS
+     * CRUD SCHEDULE SERVICE
      */
-    
 
+    // Check conflict for presenter and schedule
+    @Override
+    public boolean checkScheduleConflictForPresenter(int presenterId, LocalDateTime time){
+        return scheduleDao.checkScheduleConflictForPresenter(presenterId, time);
+    }
+
+    // Check conflict for attendee and schedule
+    @Override
+    public boolean checkScheduleConflictForAttendee(int attendeeId, LocalDateTime time){
+        return scheduleDao.checkScheduleConflictForAttendee(attendeeId, time);
+    }
+
+    // Check conflict for schedule and venue
+    @Override
+    public boolean checkScheduleConflictForVenue(String venue, LocalDateTime time){
+        return scheduleDao.checkScheduleConflictForVenue(venue, time);
+    }
+
+    // Get all schedule for presenter
+    @Override
+    public List <Session> getScheduleForPresenter(int presenterId){
+        return scheduleDao.getScheduleForPresenter(presenterId);
+    }
+
+    // Get all schedule for attendee
+    @Override
+    public List <Session> getScheduleForAttendee(int attendeeId){
+        return scheduleDao.getScheduleForAttendee(attendeeId);
+    }
+    
     /*
-     * CRUD REPORT METHODS
+     * CRUD REPORT SERVICE
      */
     
+    // Export a report in to txt file
+    public void exportReport(String fileName, List<?> data){
+        reportDao.exportReport(fileName, data);
+    }
 }

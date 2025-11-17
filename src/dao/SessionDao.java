@@ -88,7 +88,7 @@ public class SessionDao {
     }
 
     // Get all Session from database
-    public List<Session> getAllSession(){
+    public List<Session> getAllSessions(){
         List<Session> list = new ArrayList<>();
         try(Connection conn = getConnection()){
             
@@ -170,7 +170,7 @@ public class SessionDao {
     }
 
     // Get all Sessions from Database by Name
-    public List<Session> getSessionByDate(String presenterName){
+    public List<Session> getSessionByPresenterName(String presenterName){
         List<Session> list = new ArrayList<>();
         try(Connection conn = getConnection()){
 

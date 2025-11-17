@@ -194,4 +194,36 @@ public class TicketDao {
             e.printStackTrace();
         }
     }
+
+    // Get Ticket by type 
+    public List<Ticket> getTicketByType(TicketType type){
+        List<Ticket> list = new ArrayList<>();
+        try(Connection conn = getConnection()){
+
+            String commandGetByDateSQL = "SELECT * FROM Ticket WHERE type = ?";
+            // Execute get ticket by type command inside SQL
+            try(PreparedStatement command = conn.prepareStatement(commandGetByDateSQL)){
+                command.setString(1, type.name());
+
+                ResultSet result = command.executeQuery();
+                while(result.next()){
+                    Ticket t = new Ticket(
+                        TicketType.valueOf(result.getString("type")),
+                            result.getDouble("price"), 
+                            StatusType.valueOf(result.getString("status")),
+                            result.getInt("attendeeId"), 
+                            result.getInt("eventId")
+                        );
+                        t.setTicketId(result.getInt("ticketId"));
+                        
+                        list.add(t);
+                }
+
+                System.out.println("[Success] Get all tickets by type successfully");
+            }
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
+        return list;
+    }
 }
