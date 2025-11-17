@@ -203,21 +203,4 @@ public class AttendeeDao {
         }
     }
 
-    // Attendee purchase ticket
-    public void attendeePurchaseTicket(int attendeeId, int ticketId){
-        try(Connection conn = getConnection()){
-
-            String commandPurchaseTicket = "UPDATE Ticket SET attendeeId=? WHERE ticketId=?";
-            // Execute update purchase ticket for attendee command
-            try(PreparedStatement command = conn.prepareStatement(commandPurchaseTicket)){
-                command.setInt(1, attendeeId);
-                command.setInt(2, ticketId);
-
-                command.executeUpdate();
-                System.out.println("[Success] Update ticket for attendee successfully");
-            }
-        }catch(SQLException e){
-            e.printStackTrace();
-        }
-    }
 }

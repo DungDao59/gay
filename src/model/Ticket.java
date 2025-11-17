@@ -50,4 +50,16 @@ public class Ticket {
     public void setTicketId(int id){
         ticketId = id;
     }
+
+    public void setStatus(StatusType status){
+        this.status = status;
+    }
+
+    public void setAttendeeId(int id){
+        attendeeId = id;
+    }
+
+    public void setEventId(int id){
+        eventId = id;
+    }
 }

@@ -23,10 +23,10 @@ public interface EventManager {
      */
     void addAttendee(Attendee newAttendee) throws Exception;
     void updateAttendee(Attendee attendee) throws Exception;
-    void deleteAttendee(int id);
+    void deleteAttendee(int id) throws Exception;
     List<Attendee> getAllAttendees();
     Attendee getAttendeeById(int id);
-    Attendee getAttendeesByName(String name);
+    List<Attendee> getAttendeesByName(String name);
 
     // Register attendee to session
     void registerAttendeeToSession(int attendeeId, int sessionId);
@@ -38,12 +38,12 @@ public interface EventManager {
     /*
      * CRUD PRESENTER METHODS
      */
-    void addPresenter(Presenter newPresenter);
-    void updatePresenter(Presenter presenter);
-    void deletePresenter(int id);
+    void addPresenter(Presenter newPresenter) throws Exception;
+    void updatePresenter(Presenter presenter) throws Exception;
+    void deletePresenter(int id) throws Exception;
     List<Presenter> getAllPresenter();
     Presenter getPresenterById(int id);
-    Presenter getPresenterByName(String name);
+    List<Presenter> getPresentersByName(String name);
 
     // Register presenter to session
     void registerPresenterToSession(int presenterId, int sessionId);
