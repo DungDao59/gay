@@ -41,7 +41,6 @@ public class TicketDao {
                 command.setInt(5, newTicket.getEvent());
 
                 command.executeUpdate();
-                System.out.println("[Success] Add ticket to Database successfully");
             }
         }catch(SQLException e){
             e.printStackTrace();
@@ -63,7 +62,6 @@ public class TicketDao {
                 command.setInt(6,ticket.getTicketId());
 
                 command.executeUpdate();
-                System.out.println("[Success] Update ticket successfully");
             }
         }catch(SQLException e){
             e.printStackTrace();
@@ -79,7 +77,6 @@ public class TicketDao {
                 command.setInt(1, id);
 
                 command.executeUpdate();
-                System.out.println("[Success] Delete task successfully");
             }
         }catch(SQLException e){
             e.printStackTrace();
@@ -106,8 +103,6 @@ public class TicketDao {
                         
                         list.add(t);
                     }
-
-                    System.out.println("[Success] Get all ticket successfully");
                 }
         }catch(SQLException e){
             e.printStackTrace();
@@ -136,7 +131,6 @@ public class TicketDao {
                     );
                     t.setTicketId(result.getInt("ticketId"));
 
-                    System.out.println("[Success] Get ticket by id successfully");
                     return t;
                 }
             }
@@ -168,8 +162,6 @@ public class TicketDao {
 
                     list.add(t);
                 }
-                System.out.println("[Success] Get all ticket sorted by price successfully");
-
             }
         }catch(SQLException e){
             e.printStackTrace();
@@ -188,7 +180,6 @@ public class TicketDao {
                 command.setInt(2, ticketId);
 
                 command.executeUpdate();
-                System.out.println("[Success] Update ticket status successfully");
             }
         }catch(SQLException e){
             e.printStackTrace();
@@ -218,12 +209,38 @@ public class TicketDao {
                         
                         list.add(t);
                 }
-
-                System.out.println("[Success] Get all tickets by type successfully");
             }
         }catch(SQLException e){
             e.printStackTrace();
         }
+        return list;
+    }
+
+    // Get tickets for attendee
+    public List<Ticket> getTicketsForAttendee(Connection conn,int attendeeId) throws SQLException{
+        List<Ticket> list = new ArrayList<>();
+
+        String commandGetByDateSQL = "SELECT * FROM Ticket WHERE attendeeId = ?";
+        // Execute get ticket by type command inside SQL
+        try(PreparedStatement command = conn.prepareStatement(commandGetByDateSQL)){
+            command.setInt(1, attendeeId);
+
+            ResultSet result = command.executeQuery();
+            while(result.next()){
+                Ticket t = new Ticket(
+                    TicketType.valueOf(result.getString("type")),
+                        result.getDouble("price"), 
+                        StatusType.valueOf(result.getString("status")),
+                        result.getInt("attendeeId"), 
+                        result.getInt("eventId")
+                    );
+                    t.setTicketId(result.getInt("ticketId"));
+                    
+                    list.add(t);
+            }
+
+        }
+    
         return list;
     }
 }

@@ -123,23 +123,24 @@ public class EventManagerImpl implements EventManager {
     
     // Attendee Purchase Ticket
     @Override
-    public void attendeePurchaseTicket(int attendeeId, int ticketId){
-        // Get existing ticket
-        Ticket ticket = ticketDao.getTicketById(ticketId);
+    public boolean attendeePurchaseTicket(int attendeeId, int eventId, TicketType type){
+        // Set price for ticket (randomly)
+        double price = switch(type){
+            case GENERAL -> 25.00;
+            case VIP -> 50.00;
+            case EARLY_BIRD -> 15.00;
+        };
 
-        // If ticket not exist throw exception
-        if(ticket == null){
-            throw new RuntimeException("Ticket not found");
+        // Create existing ticket
+        Ticket ticket = new Ticket(type, price, StatusType.PAID, attendeeId, eventId);
+
+        // Add ticket to Database
+        try{
+            ticketDao.addTicket(ticket);
+            return true;
+        }catch(Exception e){
+            return false;
         }
-
-        // set ticket attendee ID 
-        ticket.setAttendeeId(attendeeId);
-
-        // set Ticket status to PAID
-        ticket.setStatus(StatusType.PAID);
-
-        // Update Ticket inside Database
-        ticketDao.updateTicket(ticket);
     }
 
     /*

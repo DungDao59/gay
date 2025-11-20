@@ -19,7 +19,7 @@ public class SessionDao {
 
     // Get connection to the database
     private Connection getConnection() throws SQLException {
-        return Database.getConnection();
+        return DriverManager.getConnection("jdbc:sqlite:assignment1.db");
     }
 
     /*
@@ -41,7 +41,6 @@ public class SessionDao {
                 command.setInt(6, newSession.getCapacity());
 
                 command.executeUpdate();
-                System.out.println("[Successfully] Add session to database successfully");
             }
         }catch(SQLException e){
             e.printStackTrace();
@@ -63,7 +62,6 @@ public class SessionDao {
                 command.setInt(6,session.getCapacity());
 
                 command.executeUpdate();
-                System.out.println("[Success] Update event successfully");
             }
         }catch(SQLException e){
             e.printStackTrace();
@@ -81,7 +79,6 @@ public class SessionDao {
             conn.prepareStatement("DELETE FROM Schedule_Session WHERE sessionId=" + id).executeUpdate(); // Delete Session from Schedule_Session table
 
             conn.commit();
-            System.out.println("[Success] Delete Session from all tables successfully");
         }catch(SQLException e){
             e.printStackTrace();
         }
@@ -104,8 +101,6 @@ public class SessionDao {
 
                     list.add(session);
                 }
-
-                System.out.println("[Success] Get all sessions successfully");
             }
         }catch(SQLException e){
             e.printStackTrace();
@@ -160,8 +155,6 @@ public class SessionDao {
 
                     list.add(session);
                 }
-
-                System.out.println("[Sucess] Get all Session by Date successfully");
             }
         }catch(SQLException e){
             e.printStackTrace();
@@ -193,11 +186,36 @@ public class SessionDao {
 
                     list.add(session);
                 }
-
-                System.out.println("[Sucess] Get all Session by presenter name successfully");
             }
         }catch(SQLException e){
             e.printStackTrace();
+        }
+        return list;
+    }
+
+    // Get session for attendee
+    List<Session> getSessionsForAttendee(Connection conn,int attendeeId) throws SQLException{
+        List<Session> list = new ArrayList<>();
+
+        String commandGetByDateSQL = "SELECT s.* FROM Session s JOIN Session_Attendee sat ON s.sessionId = sat.sessionId WHERE sat.attendeeId = ?";
+        // Execute get session by schedule date time inside SQL
+        try(PreparedStatement command = conn.prepareStatement(commandGetByDateSQL)){
+            command.setInt(1, attendeeId);
+
+            ResultSet result = command.executeQuery();
+            while(result.next()){
+                Session session = new Session(
+                    result.getInt("eventId"),
+                    result.getString("title"),
+                    result.getString("description"),
+                    LocalDateTime.parse(result.getString("scheduleDateTime"), F),
+                    result.getString("venue"),
+                    result.getInt("capacity")
+                );
+                session.setSessionId(result.getInt("sessionId"));
+
+                list.add(session);
+            }
         }
         return list;
     }

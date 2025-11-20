@@ -34,7 +34,7 @@ public class PresenterDao {
             try(PreparedStatement command = conn.prepareStatement(commandAddNewPresenterSQL,Statement.RETURN_GENERATED_KEYS)){
                 command.setString(1, newPresenter.getFullName());
                 command.setString(2, newPresenter.getDateOfBirth() != null ? newPresenter.getDateOfBirth().format(F) : null);
-                command.setString(3, newPresenter.getContactInformation());
+                command.setString(3, newPresenter.getContactInfomation());
 
                 command.executeUpdate();
 
@@ -52,7 +52,6 @@ public class PresenterDao {
             }
 
             conn.commit();
-            System.out.println("[Success] Successfully add Presenter to the System.");
         }catch(SQLException e){
             e.printStackTrace();
         }
@@ -69,7 +68,7 @@ public class PresenterDao {
             try(PreparedStatement command = conn.prepareStatement(commandUpdatePresenterSQL)){
                 command.setString(1, presenter.getFullName());
                 command.setString(2, presenter.getDateOfBirth() != null ? presenter.getDateOfBirth().format(F): null);
-                command.setString(3, presenter.getContactInformation());
+                command.setString(3, presenter.getContactInfomation());
 
                 command.executeUpdate();
             }
@@ -84,7 +83,6 @@ public class PresenterDao {
             }
 
             conn.commit();
-            System.out.println("[Success] Update presenter inside the system successfully");
         }catch(SQLException e){
             e.printStackTrace();
         }
@@ -109,7 +107,6 @@ public class PresenterDao {
                 }
 
                 conn.commit();
-                System.out.println("[Success] Delete presenter ID #" + id +" successfully");
         }catch(SQLException e){
             e.printStackTrace();
         }
@@ -130,7 +127,6 @@ public class PresenterDao {
                         list.add(newPresenter);
                     }
 
-                    System.out.println("Get all presenter successfully");
                 }
         }catch(SQLException e){
             e.printStackTrace();
@@ -154,7 +150,6 @@ public class PresenterDao {
                     Presenter newPresenter = new Presenter(result.getString("fullName"), result.getString("dateOfBirth") != null ? LocalDateTime.parse(result.getString("dateOfBirth"),F) : null, result.getString("contactInfo"), PresenterRole.valueOf(result.getString("role")));
                     newPresenter.setId(result.getInt("id"));
 
-                    System.out.println("[Success] Get Presenter by Id successfully");
                     return newPresenter;
                 }
                 
@@ -184,7 +179,6 @@ public class PresenterDao {
 
                     list.add(newPresenter);
                 }
-                System.out.println("[Success] Get all presenters by name successfully");
                 
             }
         }catch(SQLException e){
@@ -205,7 +199,6 @@ public class PresenterDao {
                 command.setInt(2, presenterId);
 
                 command.executeUpdate();
-                System.out.println("[Success] Registered Presenter to Session successfully");
             }
         }catch(SQLException e){
             e.printStackTrace();
@@ -225,7 +218,6 @@ public class PresenterDao {
 
                 command.executeUpdate();
 
-                System.out.println("[Success] Delete Presenter from Session successfully");
             }
         }catch(SQLException e){
             e.printStackTrace();

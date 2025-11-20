@@ -36,7 +36,7 @@ public class AttendeeDao {
             try(PreparedStatement command = conn.prepareStatement(personSQL,Statement.RETURN_GENERATED_KEYS)){
                 command.setString(1, newAttendee.getFullName());
                 command.setString(2, newAttendee.getDateOfBirth() != null ? newAttendee.getDateOfBirth().format(F): null);
-                command.setString(3, newAttendee.getContactInformation());
+                command.setString(3, newAttendee.getContactInfomation());
 
                 command.executeUpdate();
 
@@ -55,14 +55,12 @@ public class AttendeeDao {
             }
 
             conn.commit();
-            System.out.println("[Success] Attendee added succesfully");
         }catch(SQLException e){
             e.printStackTrace();
         }
     }
 
     // Update an Attendee inside Database
-    
     public void updateAttendee(Attendee attendee){
         try(Connection conn = getConnection()){
 
@@ -71,12 +69,10 @@ public class AttendeeDao {
             try(PreparedStatement command = conn.prepareStatement(commandSQL)){
                 command.setString(1, attendee.getFullName());
                 command.setString(2, attendee.getDateOfBirth() != null ? attendee.getDateOfBirth().format(F) : null);
-                command.setString(3, attendee.getContactInformation());
+                command.setString(3, attendee.getContactInfomation());
                 command.setInt(4, attendee.getId());
 
                 command.executeUpdate();
-                
-                System.out.println("[Success] Update Attendee information successfully.");
             }
         }catch(SQLException e){
             e.printStackTrace();
@@ -84,7 +80,6 @@ public class AttendeeDao {
     }
 
     // Delete an Attendee inside Database
-    
     public void deleteAttendee(int id){
         try(Connection conn = getConnection()){
             conn.setAutoCommit(false);
@@ -104,7 +99,6 @@ public class AttendeeDao {
             }
 
             conn.commit();
-            System.out.println("[Success] Delete Attendee successfully");
 
         }catch(SQLException e){
             e.printStackTrace();
@@ -112,7 +106,6 @@ public class AttendeeDao {
     }
 
     // Get all attendees from database
-    
     public List<Attendee> getAllAttendees(){
         List<Attendee> list = new ArrayList<>();
         try(Connection conn = getConnection()){
@@ -125,6 +118,11 @@ public class AttendeeDao {
                     while(result.next()){
                         Attendee a = new Attendee(result.getString("fullName"), result.getString("dateOfBirth") != null ? LocalDateTime.parse(result.getString("dateOfBirth"),F) : null, result.getString("contactInfo"));
                         a.setId(result.getInt("id"));
+
+                        a.getRegisteredSession().addAll(new SessionDao().getSessionsForAttendee(conn,a.getId()));
+
+                        a.getTickets().addAll(new TicketDao().getTicketsForAttendee(conn,a.getId()));
+
                         list.add(a);
                     }
                 }
@@ -149,7 +147,6 @@ public class AttendeeDao {
                     Attendee a = new Attendee(result.getString("fullName"), result.getString("dateOfBirth") != null ? LocalDateTime.parse(result.getString("dateOfBirth"),F) : null, result.getString("contactInfo"));
                     a.setId(result.getInt("id"));
 
-                    System.out.println("[Success] Get " + result.getString("fullName") + " attendee successfully");
                     return a;
                 }
             }
@@ -178,7 +175,6 @@ public class AttendeeDao {
 
                 }
             }
-            System.out.println("[Success] Get attendees by name successfully");
         }catch(SQLException e){
             e.printStackTrace();
         }
@@ -196,7 +192,6 @@ public class AttendeeDao {
                 command.setInt(2, attendeeId);
 
                 command.executeUpdate();
-                System.out.println("[Success] Register attendee to session successfully.");
             }
         }catch(SQLException e){
             e.printStackTrace();

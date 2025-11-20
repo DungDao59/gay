@@ -32,9 +32,9 @@ public interface EventManager {
     void registerAttendeeToSession(int attendeeId, int sessionId);
 
     // Purchase ticket by an attendee
-    void attendeePurchaseTicket(int attendeeId, int ticketId);
+    boolean attendeePurchaseTicket(int attendeeId, int eventId, TicketType type);
 
-    
+
     /*
      * CRUD PRESENTER SERVICE METHODS
      */

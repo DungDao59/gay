@@ -31,7 +31,7 @@ public class Person{
         return dateOfBirth;
     }
 
-    public String getContactInformation(){
+    public String getContactInfomation(){
         return contactInfomation;
     }
 

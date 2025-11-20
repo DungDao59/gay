@@ -116,7 +116,6 @@ public class ScheduleDao {
                     list.add(session);
                 }
 
-                System.out.println("[Success] Get attendee schedule succesfully");
 
             }
         }catch(SQLException e){
@@ -149,9 +148,6 @@ public class ScheduleDao {
 
                     list.add(session);
                 }
-
-                System.out.println("[Success] Get attendee schedule succesfully");
-
             }
         }catch(SQLException e){
             e.printStackTrace();

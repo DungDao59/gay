@@ -41,7 +41,6 @@ public class EventDao {
                 command.setString(5, newEvent.getEndDate().toString());
 
                 command.executeUpdate();
-                System.out.println("[Success] Add event to database successfully");
             }
         }catch(SQLException e){
             e.printStackTrace();
@@ -64,7 +63,6 @@ public class EventDao {
 
                 command.executeUpdate();
 
-                System.out.println("[Success] Update event successfully");
             }
 
         }catch(SQLException e){
@@ -82,7 +80,6 @@ public class EventDao {
                 command.setInt(1, id);
 
                 command.executeUpdate();
-                System.out.println("[Success] Delete event successfully");
             }
         }catch(SQLException e){
             e.printStackTrace();
@@ -106,7 +103,6 @@ public class EventDao {
                         list.add(e);
                     }
 
-                    System.out.println("[Success] Get all events successfully");
                 }
         }catch(SQLException e){
             e.printStackTrace();
@@ -157,7 +153,6 @@ public class EventDao {
 
                     list.add(e);
                 }
-                System.out.println("[Success] Get all presenters by name successfully");
             }
 
         }catch(SQLException e){
@@ -189,8 +184,6 @@ public class EventDao {
                     event.setEventId(result.getInt("eventId"));
                     list.add(event);
                 }
-
-                System.out.println("[Success] Get all event by sorted date successfully");
             }
         }catch(SQLException e){
             e.printStackTrace();
@@ -221,8 +214,6 @@ public class EventDao {
                     event.setEventId(result.getInt("eventId"));
                     list.add(event);
                 }
-
-                System.out.println("[Success] Get all event by type successfully");
             }
         }catch(SQLException e){
             e.printStackTrace();
