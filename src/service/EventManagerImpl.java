@@ -3,6 +3,8 @@ package service;
 import java.time.*;
 import java.util.*;
 
+import javax.management.RuntimeErrorException;
+
 import dao.AttendeeDao;
 import dao.EventDao;
 import dao.PresenterDao;
@@ -98,6 +100,7 @@ public class EventManagerImpl implements EventManager {
     }
 
     // Register an Attendee to a Session
+    @Override
     public void registerAttendeeToSession(int attendeeId, int sessionId){
         // Find session inside Session tabble by Id
         Session session = sessionDao.getSessionById(sessionId);
@@ -105,6 +108,10 @@ public class EventManagerImpl implements EventManager {
         // Check if sessions exist 
         if(session == null){
             throw new RuntimeException("Session not found");
+        }
+
+        if(attendeeDao.isAttendeeRegistered(attendeeId, sessionId)){
+            throw new RuntimeException("Attendee already registered in this session");
         }
 
         // Check if attendee Schedule is conflicted with session or not
@@ -216,6 +223,11 @@ public class EventManagerImpl implements EventManager {
         // Check if there is a session or not
         if(session == null){
             throw new RuntimeException("Session not found");
+        }
+
+        // Check presenter existence in session
+        if(presenterDao.isPresenterRegistered(presenterId, sessionId)){
+            throw new RuntimeException("Presenter already registered in this session");
         }
 
         // Check Presenter and Schedule to see if there is confliction or not.

@@ -69,6 +69,7 @@ public class PresenterDao {
                 command.setString(1, presenter.getFullName());
                 command.setString(2, presenter.getDateOfBirth() != null ? presenter.getDateOfBirth().format(F): null);
                 command.setString(3, presenter.getContactInfomation());
+                command.setInt(4, presenter.getId());
 
                 command.executeUpdate();
             }
@@ -223,5 +224,24 @@ public class PresenterDao {
             e.printStackTrace();
         }
     };
+
+    //Check if current presenter is inside session or not
+    public boolean isPresenterRegistered(int presenterId, int sessionId) {
+        try (Connection conn = getConnection()){
+
+            String commandSelectAttendeeSessionSQL = "SELECT 1 FROM Session_Presenter WHERE presenterId = ? AND sessionId = ? LIMIT 1";
+            // Execute command for selecting attendee if is currently joining a sesison
+            try(PreparedStatement ps = conn.prepareStatement(commandSelectAttendeeSessionSQL)){
+
+                ps.setInt(1, presenterId);
+                ps.setInt(2, sessionId);
+
+                ResultSet rs = ps.executeQuery();
+                return rs.next();  // true if a row exists
+            }
+        }catch (SQLException e) {
+            return false;
+        }
+    }
 
 }

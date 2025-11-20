@@ -12,6 +12,11 @@ import model.Ticket;
 import model.TicketType;
 import service.EventManager;
 
+/*
+ * Dao Tien Dung - s4088577
+ * Attendee Menu file for UI 
+ */
+
 public class AttendeeMenu {
     private EventManager manager;
     private final Scanner sc = new Scanner(System.in);
@@ -124,6 +129,9 @@ public class AttendeeMenu {
     
     private void updateAttendee(){
         System.out.println("----- Update Attendee -----");
+        for(Attendee attendee : manager.getAllAttendees()){
+            System.out.println("- ID: " + attendee.getId() + " | Full Name: " + attendee.getFullName());
+        }
         System.out.print("Enter attendee ID to update: ");
         int id = Integer.parseInt(sc.nextLine().trim());
 
@@ -223,6 +231,9 @@ public class AttendeeMenu {
 
     private void deleteAttendee(){
         System.out.println("----- Delete Attendee -----");
+        for(Attendee attendee : manager.getAllAttendees()){
+            System.out.println("- ID: " + attendee.getId() + " | Full Name: " + attendee.getFullName());
+        }
         int id = 0;
         while(true){
             System.out.print("Enter attendee ID to delete: ");
@@ -307,7 +318,7 @@ public class AttendeeMenu {
     }
 
     private void getAttendeesInfoByName(){
-        System.out.println("----- Get Attendee Info by ID -----");
+        System.out.println("----- Get Attendee Info by name -----");
 
         String fullName;
         while(true){

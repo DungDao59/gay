@@ -51,7 +51,7 @@ public class ScheduleDao {
     public boolean checkScheduleConflictForAttendee(int attendeeId, LocalDateTime time){
         try(Connection conn = getConnection()){
 
-            String commandGetScheduleDateTimeSQL = "SELECT s.scheduleDateTime FROM Session s JOIN Session_Attendee sa on s.sessionId = sa.sessionId WHERE sa.presenterId= ?";
+            String commandGetScheduleDateTimeSQL = "SELECT s.scheduleDateTime FROM Session s JOIN Session_Attendee sa on s.sessionId = sa.sessionId WHERE sa.attendeeId= ?";
             // Execute get scheduleDateTime command for Attendee from SQL 
             try(PreparedStatement command = conn.prepareStatement(commandGetScheduleDateTimeSQL)){
                 command.setInt(1, attendeeId);
