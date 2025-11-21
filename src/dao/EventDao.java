@@ -33,7 +33,7 @@ public class EventDao {
             
             String commandAddEventSQL = "INSERT INTO Event(name,type,location,startDate,endDate) VALUES (?,?,?,?,?)";
             // Execute adding event command sql
-            try(PreparedStatement command = conn.prepareStatement(commandAddEventSQL)){
+            try(PreparedStatement command = conn.prepareStatement(commandAddEventSQL,Statement.RETURN_GENERATED_KEYS)){
                 command.setString(1, newEvent.getName());
                 command.setString(2, newEvent.getType().name());
                 command.setString(3, newEvent.getLocation());
@@ -41,6 +41,12 @@ public class EventDao {
                 command.setString(5, newEvent.getEndDate().toString());
 
                 command.executeUpdate();
+
+                ResultSet result = command.getGeneratedKeys();
+                if(result.next()){
+                    newEvent.setEventId(result.getInt(1));
+                }
+                
             }
         }catch(SQLException e){
             e.printStackTrace();
@@ -141,7 +147,7 @@ public class EventDao {
         
         try(Connection conn = getConnection()){
 
-            String commandGetAllSQL = "SELECT DISTINCT e.* FROM Event e JOIN Session s ON e.eventId = s.sessionId JOIN Session_Presenter sp ON s.sessionId = sp.sessionId WHERE sp.presenterId = ?";
+            String commandGetAllSQL = "SELECT DISTINCT e.* FROM Event e JOIN Session s ON e.eventId = s.eventId JOIN Session_Presenter sp ON s.sessionId = sp.sessionId WHERE sp.presenterId = ?";
             // Execute get all event table from database by Presenter
             try(PreparedStatement command = conn.prepareStatement(commandGetAllSQL)){
                 command.setInt(1, presenterId);

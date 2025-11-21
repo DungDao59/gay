@@ -136,6 +136,10 @@ public class PresenterMenu {
     }
 
     private void updatePresenter(){
+        if(manager.getAllPresenter().isEmpty()){
+            System.out.println("[Info] No presenter currently");
+            return;
+        }
         System.out.println("----- Update Presenter -----");
         for(Presenter presenter: manager.getAllPresenter()){
             System.out.println("- ID: " + presenter.getId() + " | Full Name: " + presenter.getFullName());
@@ -170,7 +174,7 @@ public class PresenterMenu {
                     throw new Exception();
                 } 
             }catch(Exception e){
-                System.out.println("[Error] Invalid option. Please enter a number (0-3).");
+                System.out.println("[Error] Invalid option. Please enter a number (0-4).");
                 continue;
             }
 
@@ -259,6 +263,11 @@ public class PresenterMenu {
     }
 
     private void deletePresenter(){
+        if(manager.getAllPresenter().isEmpty()){
+            System.out.println("[Info] No presenter currently");
+            return;
+        }
+
         System.out.println("----- Delete Presenter -----");
         for(Presenter presenter: manager.getAllPresenter()){
             System.out.println("- ID: " + presenter.getId() + " | Full Name: " + presenter.getFullName());
@@ -302,7 +311,15 @@ public class PresenterMenu {
     }
 
     private void getPresenterInfoById(){
+        if(manager.getAllPresenter().isEmpty()){
+            System.out.println("[Info] No presenter currently");
+            return;
+        }
+
         System.out.println("----- Get Presenter Info by ID -----");
+        for(Presenter presenter: manager.getAllPresenter()){
+            System.out.println("- ID: " + presenter.getId() + " | Full Name: " + presenter.getFullName());
+        }
         int id = 0;
         while(true){
             System.out.print("Enter presenter ID: ");
@@ -326,6 +343,7 @@ public class PresenterMenu {
         System.out.println("+ Full Name: " + presenter.getFullName());
         System.out.println("+ Date of birth: " + presenter.getDateOfBirth().toString());
         System.out.println("+ Contact information: " + presenter.getContactInfomation());
+        System.out.println("+ Role: " + presenter.getRole().name());
         System.out.println("+ Session registered: ");
         if (presenter.getSessions().isEmpty()){
             System.out.println("    - No session registered currently");
@@ -338,6 +356,11 @@ public class PresenterMenu {
     }
 
     private void getPresenterInfoByName(){
+        if(manager.getAllPresenter().isEmpty()){
+            System.out.println("[Info] No presenter currently");
+            return;
+        }
+
         System.out.println("----- Get Presenter Info by name -----");
 
         String fullName;
@@ -371,6 +394,11 @@ public class PresenterMenu {
     }
 
     private void registeredSession(){
+        if(manager.getAllPresenter().isEmpty()){
+            System.out.println("[Info] No presenter currently");
+            return;
+        }
+
         List<Session> sessions = manager.getAllSessions();
         if(sessions.isEmpty()){
             System.out.println("[Info] Currently no sessions for registered");
@@ -424,6 +452,11 @@ public class PresenterMenu {
     }
 
     private void removeSession(){
+        if(manager.getAllPresenter().isEmpty()){
+            System.out.println("[Info] No presenter currently");
+            return;
+        }
+
         System.out.println("----- Remove Presenter from Session -----\n");
 
         int presenterId, sessisonId;
@@ -449,7 +482,7 @@ public class PresenterMenu {
             System.out.println("[Info] No current registered session");
             return;
         }
-        
+
         System.out.println("====== Current registered session ======");
         for(Session session: presenter.getSessions()){
             System.out.println("ID: " +  session.getSessionId() + " | Title: " + session.getTitle() + " | Time:  " + session.getScheduleDateTime() + " | Venue: " + session.getVenue());

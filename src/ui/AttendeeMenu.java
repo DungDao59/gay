@@ -128,6 +128,11 @@ public class AttendeeMenu {
     }
     
     private void updateAttendee(){
+        if(manager.getAllAttendees().isEmpty()){
+            System.out.println("[Info] No current attendee");
+            return;
+        }
+
         System.out.println("----- Update Attendee -----");
         for(Attendee attendee : manager.getAllAttendees()){
             System.out.println("- ID: " + attendee.getId() + " | Full Name: " + attendee.getFullName());
@@ -230,6 +235,11 @@ public class AttendeeMenu {
     }
 
     private void deleteAttendee(){
+        if(manager.getAllAttendees().isEmpty()){
+            System.out.println("[Info] No current attendee");
+            return;
+        }
+
         System.out.println("----- Delete Attendee -----");
         for(Attendee attendee : manager.getAllAttendees()){
             System.out.println("- ID: " + attendee.getId() + " | Full Name: " + attendee.getFullName());
@@ -273,6 +283,11 @@ public class AttendeeMenu {
     }
 
     private void getAttendeeInfoById(){
+        if(manager.getAllAttendees().isEmpty()){
+            System.out.println("[Info] No current attendee");
+            return;
+        }
+
         System.out.println("----- Get Attendee Info by ID -----");
         int id = 0;
         while(true){
@@ -318,6 +333,11 @@ public class AttendeeMenu {
     }
 
     private void getAttendeesInfoByName(){
+        if(manager.getAllAttendees().isEmpty()){
+            System.out.println("[Info] No current attendee");
+            return;
+        }
+
         System.out.println("----- Get Attendee Info by name -----");
 
         String fullName;
@@ -351,6 +371,11 @@ public class AttendeeMenu {
     }
 
     private void registeredSession(){
+        if(manager.getAllAttendees().isEmpty()){
+            System.out.println("[Info] No current attendee");
+            return;
+        }
+
         List<Session> sessions = manager.getAllSessions();
         if(sessions.isEmpty()){
             System.out.println("[Info] Currently no sessions for registered");
@@ -404,6 +429,11 @@ public class AttendeeMenu {
     }
 
     private void attendeePurchaseTicket(){
+        if(manager.getAllAttendees().isEmpty()){
+            System.out.println("[Info] No current attendee");
+            return;
+        }
+
         List<Event> events = manager.getAllEvents();
         if(events.isEmpty()){
             System.out.println("[Info] No events available");

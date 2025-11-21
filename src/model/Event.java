@@ -47,8 +47,32 @@ public class Event {
         return endDate;
     }
 
+    public List<Session> getSessions(){
+        return sessions;
+    }
+
     // SETTER
     public void setEventId(int id){
         eventId = id;
+    }
+
+    public void setName(String name){
+        this.name = name;
+    }
+
+    public void setEventType(EventType type){
+        this.type = type;
+    }
+
+    public void setLocation(String location){
+        this.location = location;
+    }
+
+    public void setStartDate(LocalDateTime newStartDate){
+        this.startDate = newStartDate;
+    }
+
+    public void setEndDate(LocalDateTime newEndDate){
+        this.endDate = newEndDate;
     }
 }
