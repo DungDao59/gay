@@ -38,7 +38,7 @@ public class AttendeeMenu {
         }
         else{
             for(Session s: attendee.getRegisteredSession()){
-                System.out.println("    - Session ID: " + s.getSessionId() + " | Title: " + s.getTitle() + " | Date: " + s.getScheduleDateTime());
+                System.out.println("    - Session ID: " + s.getSessionId() + " | Title: " + s.getTitle() + " | Start date: " + s.getStartDateTime() + " | End date: " + s.getEndDateTime());
             }
         }
 
@@ -318,7 +318,7 @@ public class AttendeeMenu {
         }
         else{
             for(Session s: attendee.getRegisteredSession()){
-                System.out.println("    - Session ID: " + s.getSessionId() + " | Title: " + s.getTitle() + " | Date: " + s.getScheduleDateTime());
+                System.out.println("    - Session ID: " + s.getSessionId() + " | Title: " + s.getTitle() + " | Start date: " + s.getStartDateTime() + " | End date: " + s.getEndDateTime());
             }
         }
 
@@ -385,7 +385,7 @@ public class AttendeeMenu {
 
         System.out.println("====== Available Sessions ======");
         for(Session session: sessions){
-            System.out.println("ID: " +  session.getSessionId() + " | Title: " + session.getTitle() + " | Time:  " + session.getScheduleDateTime() + " | Venue: " + session.getVenue());
+            System.out.println("ID: " +  session.getSessionId() + " | Title: " + session.getTitle() + " | Start time:  " + session.getStartDateTime() + " | End time: "+ session.getEndDateTime() + " | Venue: " + session.getVenue());
         }
 
         int attendeeId, sessisonId;

@@ -36,7 +36,7 @@ public class PresenterMenu {
         }
         else{
             for(Session s: presenter.getSessions()){
-                System.out.println("    - Session ID: " + s.getSessionId() + " | Title: " + s.getTitle() + " | Date: " + s.getScheduleDateTime());
+                System.out.println("    - Session ID: " + s.getSessionId() + " | Title: " + s.getTitle() + " | Start time: " + s.getStartDateTime() + " | End time: " + s.getEndDateTime());
             }
         }
 
@@ -350,7 +350,7 @@ public class PresenterMenu {
         }
         else{
             for(Session s: presenter.getSessions()){
-                System.out.println("    - Session ID: " + s.getSessionId() + " | Title: " + s.getTitle() + " | Date: " + s.getScheduleDateTime());
+                System.out.println("    - Session ID: " + s.getSessionId() + " | Title: " + s.getTitle() + " | Start time: " + s.getStartDateTime() + " | End time: " + s.getEndDateTime());
             }
         }
     }
@@ -408,7 +408,7 @@ public class PresenterMenu {
 
         System.out.println("====== Available Sessions ======");
         for(Session session: sessions){
-            System.out.println("ID: " +  session.getSessionId() + " | Title: " + session.getTitle() + " | Time:  " + session.getScheduleDateTime() + " | Venue: " + session.getVenue());
+            System.out.println("ID: " +  session.getSessionId() + " | Title: " + session.getTitle() + " | Start time:  " + session.getStartDateTime() + " | End time: " + session.getEndDateTime() + " | Venue: " + session.getVenue());
         }
 
         int presenterId, sessisonId;
@@ -485,7 +485,7 @@ public class PresenterMenu {
 
         System.out.println("====== Current registered session ======");
         for(Session session: presenter.getSessions()){
-            System.out.println("ID: " +  session.getSessionId() + " | Title: " + session.getTitle() + " | Time:  " + session.getScheduleDateTime() + " | Venue: " + session.getVenue());
+            System.out.println("ID: " +  session.getSessionId() + " | Title: " + session.getTitle() + " | Start time:  " + session.getStartDateTime() + " | End time: " + session.getEndDateTime() + " | Venue: " + session.getVenue());
         }
 
         while(true){

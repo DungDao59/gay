@@ -19,7 +19,6 @@ public class Database{
     // Creating the initial entities
     public static void initiallize(){
         try(Statement smt =  getConnection().createStatement()){
-            
             // Create Person base table
             smt.executeUpdate("""
                 CREATE TABLE IF NOT EXISTS Person(
@@ -66,7 +65,8 @@ public class Database{
                     eventId INTEGER NOT NULL,
                     title TEXT NOT NULL,
                     description TEXT NOT NULL,
-                    scheduleDateTime TEXT NOT NULL,
+                    startDateTime TEXT NOT NULL,
+                    endDateTime TEXT NOT NULL,
                     venue TEXT,
                     capacity INTEGER,
                     FOREIGN KEY (eventId) REFERENCES Event(eventId)
@@ -126,6 +126,7 @@ public class Database{
                     FOREIGN KEY (sessionId) REFERENCES Session(sessionId)
                 );
             """);
+
 
             System.out.println("Database initiallized successfully");
         }

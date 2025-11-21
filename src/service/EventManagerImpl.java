@@ -3,8 +3,6 @@ package service;
 import java.time.*;
 import java.util.*;
 
-import javax.management.RuntimeErrorException;
-
 import dao.AttendeeDao;
 import dao.EventDao;
 import dao.PresenterDao;
@@ -115,7 +113,7 @@ public class EventManagerImpl implements EventManager {
         }
 
         // Check if attendee Schedule is conflicted with session or not
-        if(checkScheduleConflictForAttendee(attendeeId, session.getScheduleDateTime())){
+        if(scheduleDao.checkScheduleConflictForAttendee(attendeeId, session.getStartDateTime(),session.getEndDateTime())){
             throw new RuntimeException("Attendee schedule conflict.");
         }
 
@@ -231,7 +229,7 @@ public class EventManagerImpl implements EventManager {
         }
 
         // Check Presenter and Schedule to see if there is confliction or not.
-        if(checkScheduleConflictForPresenter(presenterId, session.getScheduleDateTime())){
+        if(scheduleDao.checkScheduleConflictForPresenter(presenterId, session.getStartDateTime(),session.getEndDateTime())){
             throw new RuntimeException("Presenter schedule conflict");
         }
 
@@ -331,6 +329,9 @@ public class EventManagerImpl implements EventManager {
         // Check if session existed or not
         if(newSession == null) throw new Exception("Session can't be null");
 
+        // Check if have the same session in the same venue with the same time
+        if(scheduleDao.checkScheduleConflictForVenue(newSession.getVenue(), newSession.getStartDateTime(), newSession.getEndDateTime())) throw new Exception("Venue have been booked.");
+
         // Add session to Database
         sessionDao.addSession(newSession);
     }
@@ -341,6 +342,12 @@ public class EventManagerImpl implements EventManager {
         // Check if session existed or not
         if(session == null) throw new Exception("Session can't be null");
     
+        // Check if session start date is after end time or not
+        if(session.getStartDateTime().isAfter(session.getEndDateTime()))throw new Exception("Start time must be before end time");
+
+        // Check if have the same session in the same venue with the same time
+        if(scheduleDao.checkScheduleConflictForVenue(session.getVenue(), session.getStartDateTime(), session.getEndDateTime())) throw new Exception("Venue have been booked.");
+
         // Update session for database
         sessionDao.updateSession(session);
     }
@@ -438,7 +445,7 @@ public class EventManagerImpl implements EventManager {
     // Get all Tickets by Type
     @Override
     public List<Ticket> getTicketsByType(TicketType type){
-        return ticketDao.getAllTickets();
+        return ticketDao.getTicketByType(type);
     }
 
 
@@ -459,20 +466,20 @@ public class EventManagerImpl implements EventManager {
 
     // Check conflict for presenter and schedule
     @Override
-    public boolean checkScheduleConflictForPresenter(int presenterId, LocalDateTime time){
-        return scheduleDao.checkScheduleConflictForPresenter(presenterId, time);
+    public boolean checkScheduleConflictForPresenter(int presenterId, LocalDateTime newStart, LocalDateTime newEnd){
+        return scheduleDao.checkScheduleConflictForPresenter(presenterId, newStart,newEnd);
     }
 
     // Check conflict for attendee and schedule
     @Override
-    public boolean checkScheduleConflictForAttendee(int attendeeId, LocalDateTime time){
-        return scheduleDao.checkScheduleConflictForAttendee(attendeeId, time);
+    public boolean checkScheduleConflictForAttendee(int attendeeId, LocalDateTime newStart, LocalDateTime newEnd){
+        return scheduleDao.checkScheduleConflictForAttendee(attendeeId, newStart, newEnd);
     }
 
     // Check conflict for schedule and venue
     @Override
-    public boolean checkScheduleConflictForVenue(String venue, LocalDateTime time){
-        return scheduleDao.checkScheduleConflictForVenue(venue, time);
+    public boolean checkScheduleConflictForVenue(String venue, LocalDateTime newStart, LocalDateTime newEnd){
+        return scheduleDao.checkScheduleConflictForVenue(venue, newStart, newEnd);
     }
 
     // Get all schedule for presenter

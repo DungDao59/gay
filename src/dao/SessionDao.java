@@ -30,17 +30,24 @@ public class SessionDao {
     public void addSession(Session newSession){
         try(Connection conn = getConnection()){
             
-            String commandAddSessionSQL = "INSERT INTO Session(eventId, title, description, scheduleDateTime, venue, capacity) VALUES (?,?,?,?,?,?)";
+            String commandAddSessionSQL = "INSERT INTO Session(eventId, title, description, startDateTime, endDateTime, venue, capacity) VALUES (?,?,?,?,?,?)";
             // Execute add session to database
-            try(PreparedStatement command = conn.prepareStatement(commandAddSessionSQL)){
+            try(PreparedStatement command = conn.prepareStatement(commandAddSessionSQL,Statement.RETURN_GENERATED_KEYS)){
                 command.setInt(1, newSession.getEventId());
                 command.setString(2, newSession.getTitle());
                 command.setString(3, newSession.getDescription());
-                command.setString(4, newSession.getScheduleDateTime().toString());
-                command.setString(5, newSession.getVenue());
-                command.setInt(6, newSession.getCapacity());
+                command.setString(4, newSession.getStartDateTime().toString());
+                command.setString(5, newSession.getEndDateTime().toString());
+                command.setString(6, newSession.getVenue());
+                command.setInt(7, newSession.getCapacity());
 
                 command.executeUpdate();
+
+                ResultSet result = command.getGeneratedKeys();
+
+                if(result.next()){
+                    newSession.setSessionId(result.getInt(1));
+                }
             }
         }catch(SQLException e){
             e.printStackTrace();
@@ -51,15 +58,16 @@ public class SessionDao {
     public void updateSession(Session session){
         try(Connection conn = getConnection()){
 
-            String commandUpdateSQL = "UPDATE Session SET eventId=?, title=?, description=?, scheduleDateTime=?, venue=?, capacity=? WHERE sessionId=?";
+            String commandUpdateSQL = "UPDATE Session SET eventId=?, title=?, description=?, startDateTime=?, endDateTime=?, venue=?, capacity=? WHERE sessionId=?";
             // Execute update a session command from database
             try(PreparedStatement command = conn.prepareStatement(commandUpdateSQL)){
                 command.setInt(1, session.getEventId());
                 command.setString(2, session.getTitle());
                 command.setString(3, session.getDescription());
-                command.setString(4, session.getScheduleDateTime().toString());
-                command.setString(5, session.getVenue());
-                command.setInt(6,session.getCapacity());
+                command.setString(4, session.getStartDateTime().toString());
+                command.setString(5, session.getEndDateTime().toString());
+                command.setString(6, session.getVenue());
+                command.setInt(7,session.getCapacity());
 
                 command.executeUpdate();
             }
@@ -96,7 +104,7 @@ public class SessionDao {
                 ResultSet result = create.executeQuery(commandGetAllSQL);
             ){
                 while(result.next()){
-                    Session session = new Session(result.getInt("eventId"), result.getString("title"), result.getString("description"), LocalDateTime.parse(result.getString("scheduleDateTime"),F), result.getString("venue"), result.getInt("capacity"));
+                    Session session = new Session(result.getInt("eventId"), result.getString("title"), result.getString("description"), LocalDateTime.parse(result.getString("startDateTime"),F),LocalDateTime.parse(result.getString("endDateTime"),F), result.getString("venue"), result.getInt("capacity"));
                     session.setSessionId(result.getInt("sessionId"));
 
                     list.add(session);
@@ -119,7 +127,7 @@ public class SessionDao {
 
                 ResultSet result = command.executeQuery();
                 if(result.next()){
-                    Session session = new Session(result.getInt("eventId"), result.getString("title"), result.getString("description"), LocalDateTime.parse(result.getString("scheduleDateTime"),F), result.getString("venue"), result.getInt("capacity"));
+                    Session session = new Session(result.getInt("eventId"), result.getString("title"), result.getString("description"), LocalDateTime.parse(result.getString("startDateTime"),F),LocalDateTime.parse(result.getString("endDateTime"),F), result.getString("venue"), result.getInt("capacity"));
                     session.setSessionId(result.getInt("sessionId"));
 
                     return session;
@@ -136,21 +144,14 @@ public class SessionDao {
         List<Session> list = new ArrayList<>();
         try(Connection conn = getConnection()){
 
-            String commandGetByDateSQL = "SELECT * FROM Session WHERE scheduleDateTime LIKE ?";
+            String commandGetByDateSQL = "SELECT * FROM Session WHERE startDateTime LIKE ?";
             // Execute get session by schedule date time inside SQL
             try(PreparedStatement command = conn.prepareStatement(commandGetByDateSQL)){
                 command.setString(1, time.toLocalDate().toString() + "%");
 
                 ResultSet result = command.executeQuery();
                 while(result.next()){
-                    Session session = new Session(
-                        result.getInt("eventId"),
-                        result.getString("title"),
-                        result.getString("description"),
-                        LocalDateTime.parse(result.getString("scheduleDateTime"), F),
-                        result.getString("venue"),
-                        result.getInt("capacity")
-                    );
+                    Session session = new Session(result.getInt("eventId"), result.getString("title"), result.getString("description"), LocalDateTime.parse(result.getString("startDateTime"),F),LocalDateTime.parse(result.getString("endDateTime"),F), result.getString("venue"), result.getInt("capacity"));
                     session.setSessionId(result.getInt("sessionId"));
 
                     list.add(session);
@@ -174,14 +175,7 @@ public class SessionDao {
 
                 ResultSet result = command.executeQuery();
                 while(result.next()){
-                    Session session = new Session(
-                        result.getInt("eventId"),
-                        result.getString("title"),
-                        result.getString("description"),
-                        LocalDateTime.parse(result.getString("scheduleDateTime"), F),
-                        result.getString("venue"),
-                        result.getInt("capacity")
-                    );
+                    Session session = new Session(result.getInt("eventId"), result.getString("title"), result.getString("description"), LocalDateTime.parse(result.getString("startDateTime"),F),LocalDateTime.parse(result.getString("endDateTime"),F), result.getString("venue"), result.getInt("capacity"));
                     session.setSessionId(result.getInt("sessionId"));
 
                     list.add(session);
@@ -204,14 +198,7 @@ public class SessionDao {
 
             ResultSet result = command.executeQuery();
             while(result.next()){
-                Session session = new Session(
-                    result.getInt("eventId"),
-                    result.getString("title"),
-                    result.getString("description"),
-                    LocalDateTime.parse(result.getString("scheduleDateTime"), F),
-                    result.getString("venue"),
-                    result.getInt("capacity")
-                );
+                Session session = new Session(result.getInt("eventId"), result.getString("title"), result.getString("description"), LocalDateTime.parse(result.getString("startDateTime"),F),LocalDateTime.parse(result.getString("endDateTime"),F), result.getString("venue"), result.getInt("capacity"));
                 session.setSessionId(result.getInt("sessionId"));
 
                 list.add(session);

@@ -11,17 +11,20 @@ public class Session {
     private int eventId;
     private String title;
     private String description;
-    private LocalDateTime scheduleDateTime;
+    private LocalDateTime startDateTime;
+    private LocalDateTime endDateTime;
     private String venue;
     private int capacity;
+
     private List<Attendee> attendees;
     private List<Presenter> presenters;
 
-    public Session(int eventId,String title, String description, LocalDateTime scheduleDateTime, String venue, int capacity){
+    public Session(int eventId,String title, String description, LocalDateTime startDateTime, LocalDateTime endDateTime, String venue, int capacity){
         this.eventId = eventId;
         this.title = title;
         this.description = description;
-        this.scheduleDateTime = scheduleDateTime;
+        this.startDateTime = startDateTime;
+        this.endDateTime = endDateTime;
         this.venue = venue;
         this.capacity = capacity;
     }
@@ -43,8 +46,12 @@ public class Session {
         return description;
     }
 
-    public LocalDateTime getScheduleDateTime(){
-        return scheduleDateTime;
+    public LocalDateTime getStartDateTime(){
+        return startDateTime;
+    }
+    
+    public LocalDateTime getEndDateTime(){
+        return endDateTime;
     }
     
     public String getVenue(){
@@ -55,16 +62,44 @@ public class Session {
         return capacity;
     }
 
-    public List<Attendee> returnAttendees(){
+    public List<Attendee> getAttendees(){
         return attendees;
     }
 
-    public List<Presenter> returnPresenters(){
+    public List<Presenter> getPresenters(){
         return presenters;
     }
 
     // SETTER
     public void setSessionId(int id){
         sessionId = id;
+    }
+
+    public void setTitle(String newTitle){
+        this.title = newTitle;
+    }
+
+    public void setDescription(String newDescription){
+        this.description = newDescription;
+    }
+
+    public void setVenue(String newVenue){
+        this.venue = newVenue;
+    }
+
+    public void setEventId(int newEventID){
+        this.eventId = newEventID;
+    }
+
+    public void setStartDateTime(LocalDateTime newDate){
+        this.startDateTime = newDate;
+    }
+
+    public void setEndDateTime(LocalDateTime newDate){
+        this.endDateTime = newDate;
+    }
+
+    public void setCapacity(int capacity){
+        this.capacity = capacity;
     }
 }

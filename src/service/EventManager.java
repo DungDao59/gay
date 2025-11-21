@@ -99,9 +99,9 @@ public interface EventManager {
     /*
      * CRUD SCHEDULE SERVICE METHODS
      */
-    boolean checkScheduleConflictForPresenter(int presenterId, LocalDateTime time);
-    boolean checkScheduleConflictForAttendee(int attendeeId, LocalDateTime time);
-    boolean checkScheduleConflictForVenue(String venue, LocalDateTime time);
+    boolean checkScheduleConflictForPresenter(int presenterId, LocalDateTime newStart, LocalDateTime newEnd);
+    boolean checkScheduleConflictForAttendee(int attendeeId, LocalDateTime newStart, LocalDateTime newEnd);
+    boolean checkScheduleConflictForVenue(String venue, LocalDateTime newStart, LocalDateTime newEnd);
 
     List <Session> getScheduleForPresenter(int presenterId);
     List <Session> getScheduleForAttendee(int attendeeId);
