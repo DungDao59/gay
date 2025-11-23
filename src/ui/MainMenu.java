@@ -51,6 +51,7 @@ public class MainMenu {
                     break;
                 case 3:
                     new EventMenu(manager).eventMenu();
+                    break;
                 case 4: 
                     new SessionMenu(manager).sessionMenu();
                     break;

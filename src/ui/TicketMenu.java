@@ -45,6 +45,8 @@ public class TicketMenu{
         System.out.println("+ Attendee name: " + manager.getAttendeeById(ticket.getAttendee()).getFullName());
         System.out.println("+ Event name: " + manager.getEventById(ticket.getEvent()).getName());
         System.out.println("+ Status: " + ticket.getStatus().name());
+        
+        System.out.println();
     }
 
     private void updateTicket(){

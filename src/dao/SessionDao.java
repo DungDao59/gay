@@ -140,14 +140,15 @@ public class SessionDao {
     }
 
     // Get the Session by date
-    public List<Session> getSessionByDate(LocalDateTime time){
+    public List<Session> getSessionByDate(LocalDateTime startDate, LocalDateTime endDate){
         List<Session> list = new ArrayList<>();
         try(Connection conn = getConnection()){
 
-            String commandGetByDateSQL = "SELECT * FROM Session WHERE startDateTime LIKE ?";
+            String commandGetByDateSQL = "SELECT * FROM Session WHERE DATE(startDateTime) BETWEEN ? AND ?";
             // Execute get session by schedule date time inside SQL
             try(PreparedStatement command = conn.prepareStatement(commandGetByDateSQL)){
-                command.setString(1, time.toLocalDate().toString() + "%");
+                command.setString(1, startDate.toString());
+                command.setString(2, endDate.toString());
 
                 ResultSet result = command.executeQuery();
                 while(result.next()){
@@ -164,14 +165,14 @@ public class SessionDao {
     }
 
     // Get all Sessions from Database by Name
-    public List<Session> getSessionByPresenterName(String presenterName){
+    public List<Session> getSessionByPresenter(int presenterId){
         List<Session> list = new ArrayList<>();
         try(Connection conn = getConnection()){
 
-            String commandGetByDateSQL = "SELECT s.* FROM Session s JOIN Session_Presenter sp ON s.sessionId = sp.sessionId JOIN Presenter p ON sp.presenterId = p.presenterId JOIN Person per ON p.presenterId = per.id WHERE per.fullName = ?";
+            String commandGetByDateSQL = "SELECT s.* FROM Session s JOIN Session_Presenter sp ON s.sessionId = sp.sessionId JOIN Presenter p ON sp.presenterId = p.presenterId JOIN Person per ON p.presenterId = per.id WHERE per.id = ?";
             // Execute get session by schedule date time inside SQL
             try(PreparedStatement command = conn.prepareStatement(commandGetByDateSQL)){
-                command.setString(1, presenterName);
+                command.setInt(1, presenterId);
 
                 ResultSet result = command.executeQuery();
                 while(result.next()){

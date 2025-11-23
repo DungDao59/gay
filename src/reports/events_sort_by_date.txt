@@ -1,0 +1,39 @@
+===== Report Generated ===== 
+
+=== Event Report === 
++ ID: 2
++ Name: Kem
++ Type: CONFERENCE
++ Location: 12 Phu My HUNG
++ Start date: 2025-11-22T19:00
++ End date: 2025-11-23T21:00
++ Session: 
+    - [Info] No session available for this event
+
++ ID: 1
++ Name: Experience Day
++ Type: WORKSHOP
++ Location: RMIT University
++ Start date: 2025-11-23T20:00
++ End date: 2025-11-23T22:00
++ Session: 
+    - [Info] No session available for this event
+
++ ID: 5
++ Name: Kem
++ Type: WORKSHOP
++ Location: Now
++ Start date: 2025-12-19T08:08
++ End date: 2025-12-19T08:09
++ Session: 
+    - [Info] No session available for this event
+
++ ID: 4
++ Name: Kem
++ Type: EXHIBITION
++ Location: Here
++ Start date: 2025-12-20T09:17
++ End date: 2025-12-21T08:15
++ Session: 
+    - [Info] No session available for this event
+

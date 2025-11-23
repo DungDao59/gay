@@ -383,14 +383,14 @@ public class EventManagerImpl implements EventManager {
 
     // Get all Sessions by date from Database
     @Override
-    public List<Session> getSessionsByDate(LocalDateTime time){
-        return sessionDao.getSessionByDate(time);
+    public List<Session> getSessionsByDate(LocalDateTime starDateTime, LocalDateTime endDateTime){
+        return sessionDao.getSessionByDate(starDateTime,endDateTime);
     }
 
     // Get all Sessions by Presenter name from Database
     @Override
-    public List<Session> getSessionsByPresenterName(String presenterName){
-        return sessionDao.getSessionByPresenterName(presenterName);
+    public List<Session> getSessionsByPresenter(int presenterId){
+        return sessionDao.getSessionByPresenter(presenterId);
     }
 
     // Check session capacity for session by Id 
@@ -506,8 +506,33 @@ public class EventManagerImpl implements EventManager {
      * CRUD REPORT SERVICE
      */
     
-    // Export a report in to txt file
-    public void exportReport(String fileName, List<?> data){
-        reportDao.exportReport(fileName, data);
+    // Export an event report by type into txt file 
+    @Override
+    public void exportEventsByType(String filename, List<Event> eventsForType){
+        reportDao.exportEventsByType(filename, eventsForType);
+    }
+
+    // Export a event report sorted by date into txt file 
+    @Override
+    public void exportEventsByDateSorted(String filename, List<Event> sortedEvents){
+        reportDao.exportEventsByDateSorted(filename, sortedEvents);
+    }
+
+    // Export an tickets report by type into txt file 
+    @Override
+    public void exportTicketsByType(String filename, List<Ticket> ticketsForType){
+        reportDao.exportTicketsByType(filename, ticketsForType);
+    }
+
+    // Export a session report by date into txt file 
+    @Override
+    public void exportSessionByDate(String filename, List<Session> sessions){
+        reportDao.exportSessionByDate(filename, sessions);
+    }
+
+    // Export a session report by presenter into txt file 
+    @Override
+    public void exportSessionByPresenter(String filename, List<Session> sessions){
+        reportDao.exportSessionByPresenter(filename, sessions);
     }
 }

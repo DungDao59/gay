@@ -1,0 +1,17 @@
+===== Report Generated ===== 
+
+=== Ticket Report === 
++ ID: 2
++ Type: VIP
++ Price: $50.0
++ Attendee ID: 4
++ Event ID: 5
++ Status: PAID
+
++ ID: 3
++ Type: VIP
++ Price: $50.0
++ Attendee ID: 5
++ Event ID: 4
++ Status: PAID
+

@@ -77,8 +77,8 @@ public interface EventManager {
     void deleteSession(int id) throws Exception;
     List<Session> getAllSessions();
     Session getSessionById(int id);
-    List<Session> getSessionsByDate(LocalDateTime time);
-    List<Session> getSessionsByPresenterName(String presenterName);
+    List<Session> getSessionsByDate(LocalDateTime startDateTime, LocalDateTime endDateTime);
+    List<Session> getSessionsByPresenter(int presenterId);
 
     // Check session capacity
     boolean checkSessionCapacity(int id);
@@ -113,5 +113,9 @@ public interface EventManager {
     /*
      * CRUD REPORT SERVICE METHODS
      */
-    void exportReport(String filename, List<?> data);
+    void exportEventsByType(String filename, List<Event> eventsForType);
+    void exportEventsByDateSorted(String filename, List<Event> sortedEvents);
+    void exportTicketsByType(String filename, List<Ticket> ticketsForType);
+    void exportSessionByDate(String filename, List<Session> sessions);
+    void exportSessionByPresenter(String filename, List<Session> sessions);
 }
