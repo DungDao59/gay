@@ -442,12 +442,16 @@ public class AttendeeMenu {
 
         System.out.println("------ Purchase Ticket ------ \n");
 
-        System.out.print("====== Available Events ======");
+        System.out.println("====== Available Events ======");
         for(Event event: events){
             System.out.println("+ Event ID: "+ event.getEventId() + " | Name: " + event.getName() + " | Location: " + event.getLocation() + " | Start date: " + event.getStartDate() + " | End date: " + event.getEndDate());
         }
 
+        System.out.println();
         int attendeeId, eventId;
+        for(Attendee attendee: manager.getAllAttendees()){
+            System.out.println("- Attendee ID: " + attendee.getId() + " | Full name: " + attendee.getFullName());
+        }
         while(true){
             try{
                 System.out.print("Enter attendee ID: ");

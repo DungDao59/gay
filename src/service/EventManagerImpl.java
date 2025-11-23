@@ -24,6 +24,17 @@ import model.TicketType;
  * Create fully concrete method for Event Manager CRUD service
  */
 public class EventManagerImpl implements EventManager {
+    // Helper function
+    @Override
+    public double getPriceByType(TicketType type){
+        // Set price for ticket (randomly)
+            return switch(type){
+                case GENERAL -> 25.00;
+                case VIP -> 50.00;
+                case EARLY_BIRD -> 15.00;
+            };
+    }
+
     //Calling service of each class
     private final AttendeeDao attendeeDao = new AttendeeDao();
     private final PresenterDao presenterDao = new PresenterDao();
@@ -127,26 +138,23 @@ public class EventManagerImpl implements EventManager {
     }
     
     // Attendee Purchase Ticket
-    @Override
-    public boolean attendeePurchaseTicket(int attendeeId, int eventId, TicketType type){
-        // Set price for ticket (randomly)
-        double price = switch(type){
-            case GENERAL -> 25.00;
-            case VIP -> 50.00;
-            case EARLY_BIRD -> 15.00;
-        };
+        @Override
+        public boolean attendeePurchaseTicket(int attendeeId, int eventId, TicketType type){
 
-        // Create existing ticket
-        Ticket ticket = new Ticket(type, price, StatusType.PAID, attendeeId, eventId);
+            //Get price for ticket type
+            double price = getPriceByType(type);
 
-        // Add ticket to Database
-        try{
-            ticketDao.addTicket(ticket);
-            return true;
-        }catch(Exception e){
-            return false;
+            // Create existing ticket
+            Ticket ticket = new Ticket(type, price, StatusType.PAID, attendeeId, eventId);
+
+            // Add ticket to Database
+            try{
+                ticketDao.addTicket(ticket);
+                return true;
+            }catch(Exception e){
+                return false;
+            }
         }
-    }
 
     /*
      * PRESENTER SERVICE METHODS

@@ -50,6 +50,7 @@ public class SessionMenu {
         System.out.println("+ Start time: " + session.getStartDateTime());
         System.out.println("+ End time: " + session.getEndDateTime());
         System.out.println("+ Event: " + session.getEventId());
+        System.out.println("+ Attendees:");
         if(session.getAttendees() == null || session.getAttendees().isEmpty()){
             System.out.println("    - [Info] No attendee available for this session");
         }
@@ -59,6 +60,7 @@ public class SessionMenu {
             }
         }
 
+        System.out.println("+ Presenters");
         if(session.getPresenters() == null || session.getPresenters().isEmpty()){
             System.out.println("    - [Info] No presenter available for this session");
         }
@@ -463,6 +465,7 @@ public class SessionMenu {
         System.out.println("+ Start time: " + session.getStartDateTime());
         System.out.println("+ End time: " + session.getEndDateTime());
         System.out.println("+ Event: " + session.getEventId());
+        System.out.println("+ Attendees:");
         if(session.getAttendees() == null || session.getAttendees().isEmpty()){
             System.out.println("    - [Info] No attendee available for this session");
         }
@@ -472,6 +475,7 @@ public class SessionMenu {
             }
         }
 
+        System.out.println("+ Presenters");
         if(session.getPresenters() == null || session.getPresenters().isEmpty()){
             System.out.println("    - [Info] No presenter available for this session");
         }

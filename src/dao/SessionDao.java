@@ -30,7 +30,7 @@ public class SessionDao {
     public void addSession(Session newSession){
         try(Connection conn = getConnection()){
             
-            String commandAddSessionSQL = "INSERT INTO Session(eventId, title, description, startDateTime, endDateTime, venue, capacity) VALUES (?,?,?,?,?,?)";
+            String commandAddSessionSQL = "INSERT INTO Session(eventId, title, description, startDateTime, endDateTime, venue, capacity) VALUES (?,?,?,?,?,?,?)";
             // Execute add session to database
             try(PreparedStatement command = conn.prepareStatement(commandAddSessionSQL,Statement.RETURN_GENERATED_KEYS)){
                 command.setInt(1, newSession.getEventId());

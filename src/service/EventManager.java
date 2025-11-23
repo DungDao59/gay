@@ -18,6 +18,9 @@ import model.StatusType;
  */
 
 public interface EventManager {
+    // Helper function
+    double getPriceByType(TicketType type);
+
     /*
      * CRUD ATTENDEE SERVICE METHODS
      */

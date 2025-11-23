@@ -27,7 +27,7 @@ public class ScheduleDao {
         if(start1 == null || start2 == null || end1 == null || end2 == null){
             return false;
         }
-        return start1.isBefore(end2) && start2.isBefore(end1);
+        return start1.isBefore(end2) && end1.isAfter(start2);
     }
 
     /*

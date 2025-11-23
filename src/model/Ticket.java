@@ -51,6 +51,14 @@ public class Ticket {
         ticketId = id;
     }
 
+    public void setType(TicketType newType) {
+        type = newType;
+    }
+
+    public void setPrice(double newPrice){
+        price = newPrice;
+    }
+    
     public void setStatus(StatusType status){
         this.status = status;
     }
